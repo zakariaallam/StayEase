@@ -1,0 +1,5 @@
+docker-compose.yml
+dockerfile
+nginx.conf
+/StayEase/.env
+/StayEase//vendor
