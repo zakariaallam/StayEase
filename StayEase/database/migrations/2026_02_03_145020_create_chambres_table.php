@@ -18,9 +18,9 @@ return new class extends Migration {
             $table->string('statut');
             $table->integer('capacite');
             $table->foreignId('hotel_id')->constrained()->onDelete('cascade');
-            $table->foreignId('categorie_id')->constrained('categorie');
-            $table->foreignId('tag_id')->constrained('tag');
-            $table->foreignId('propriete_id')->constrained('propriete');
+            $table->foreignId('categorie_id')->constrained('categories');
+            $table->foreignId('tag_id')->constrained('tags');
+            $table->foreignId('propriete_id')->constrained('proprietes');
             $table->timestamps();
         });
     }
