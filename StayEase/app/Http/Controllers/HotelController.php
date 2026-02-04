@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Hotel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HotelController extends Controller
 {
@@ -12,7 +13,9 @@ class HotelController extends Controller
      */
     public function index()
     {
-        //
+        $hotels=DB::table('hotels')->get();
+        return view('hotels.index',compact('hotels'));
+
     }
 
     /**
@@ -20,7 +23,7 @@ class HotelController extends Controller
      */
     public function create()
     {
-        //
+        return view('hotels.create');
     }
 
     /**
@@ -28,7 +31,13 @@ class HotelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated=$request->validate([
+            'nom' => 'required|max:255',
+            'adresse' => 'required|max:400',
+            'description' => 'nullable',
+        ]);
+        Hotel::create($validated);
+        return redirect()->route('hotels.index');
     }
 
     /**
@@ -44,7 +53,7 @@ class HotelController extends Controller
      */
     public function edit(Hotel $hotel)
     {
-        //
+        return view('hotels.edit',compact('hotel'));
     }
 
     /**
@@ -52,7 +61,13 @@ class HotelController extends Controller
      */
     public function update(Request $request, Hotel $hotel)
     {
-        //
+        $validated=$request->validate([
+            'nom' => 'required|max:255',
+            'adresse' => 'required|max:400',
+            'description' => 'nullable',
+        ]);
+        Hotel::update($validated);
+        return redirect()->route('hotels.index');
     }
 
     /**
@@ -60,6 +75,7 @@ class HotelController extends Controller
      */
     public function destroy(Hotel $hotel)
     {
-        //
+        $hotel->delete();
+        return redirect()->route('hotels.index');
     }
 }
