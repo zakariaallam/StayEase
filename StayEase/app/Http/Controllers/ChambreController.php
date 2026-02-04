@@ -8,7 +8,8 @@ use App\Models\Chambre;
 use App\Models\Categorie;
 use App\Models\Propriete;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
+
 
 class ChambreController extends Controller
 {
