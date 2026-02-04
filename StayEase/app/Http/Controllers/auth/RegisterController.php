@@ -14,9 +14,9 @@ class RegisterController extends Controller
             'name' => ['required','string'],
             'email' => ['required','email'],
             'password' => ['required'],
-            'role_id' => 1
         ]);
         $userData['password'] = bcrypt($userData['password']);
+        $userData['role_id'] = 1;
         $user = User::create($userData);
         Auth::login($user);
         return redirect()->route('home');
