@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Hotel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class HotelController extends Controller
 {
@@ -35,7 +36,14 @@ class HotelController extends Controller
             'nom' => 'required|max:255',
             'adresse' => 'required|max:400',
             'description' => 'nullable',
+            'image' => 'required|image|mimes:jpg,jpeg,png,webp,jfif|max:2048',
         ]);
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $name = time() . '_' . $file->getClientOriginalName();
+            $path = $file->storeAs('hotels', $name, 'public');
+            $validated['image'] = $path;
+        }
         Hotel::create($validated);
         return redirect()->route('hotels.index');
     }
@@ -65,8 +73,20 @@ class HotelController extends Controller
             'nom' => 'required|max:255',
             'adresse' => 'required|max:400',
             'description' => 'nullable',
+            'image' => 'required|image|mimes:jpg,jpeg,png,webp,jfif|max:2048',
         ]);
-        Hotel::update($validated);
+        if ($request->hasFile('image')) {
+            // delete pic
+            if ($hotel->image && Storage::disk('public')->exists($hotel->image)) {
+                Storage::disk('public')->delete($hotel->image);
+            }
+            // reneme pic
+            $file = $request->file('image');
+            $name = time() . '_' . $file->getClientOriginalName();
+            $path = $file->storeAs('hotels', $name, 'public');
+            $validated['image'] = $path;
+        }
+        $hotel->update($validated);
         return redirect()->route('hotels.index');
     }
 
@@ -75,6 +95,10 @@ class HotelController extends Controller
      */
     public function destroy(Hotel $hotel)
     {
+        // delete pic
+        if ($hotel->image && Storage::disk('public')->exists($hotel->image)) {
+            Storage::disk('public')->delete($hotel->image);
+        }
         $hotel->delete();
         return redirect()->route('hotels.index');
     }
