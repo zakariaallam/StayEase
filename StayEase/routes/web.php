@@ -21,3 +21,13 @@ Route::view('home','home')->name('home');
 Route::view('register','auth.register');
 Route::post('register',RegisterController::class)->name('register.user');
 
+
+Route::get('login',function(){
+    return view('auth.login');
+})->name('login');
+
+Route::post('login',LoginController::class)->name('login.attempt');
+Route::view('home','home')->name('home');
+
+Route::view('register','auth.register');
+Route::post('register',RegisterController::class)->name('register.user');
