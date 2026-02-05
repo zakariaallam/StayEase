@@ -31,3 +31,4 @@ Route::view('home','home')->name('home');
 
 Route::view('register','auth.register');
 Route::post('register',RegisterController::class)->name('register.user');
+Route::post('register',RegisterController::class)->name('register.user');
