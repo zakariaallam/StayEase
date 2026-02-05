@@ -1,1 +1,1 @@
-<h1>Welcome {{ Auth::user()->name }} to our hotel :) </h1>
+<h1>Welcome {{ Auth::user()->name}} to our hotel :) </h1>

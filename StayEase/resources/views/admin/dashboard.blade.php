@@ -1,0 +1,1 @@
+<h1>Welcome Back (Admin) {{ Auth::user()->name}} </h1>
