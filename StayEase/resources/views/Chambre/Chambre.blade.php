@@ -31,7 +31,7 @@
     </nav>
     {{-- Navbar end --}}
 
-    <a type="button" href="/Chambre/add" class="btn btn-primary">add</a>
+    <a type="button" href="{{ route('Chambre.create') }}" class="btn btn-primary">add</a>
     <div class="row row-cols-1 row-cols-md-2 g-4">
 
         @forelse ($data as $dat)
@@ -42,13 +42,16 @@
                     <p class="card-text">description: {{ $dat->description }}</p>
                     <p class="card-text">statut: {{ $dat->statut }}</p>
                     <p class="card-text">capacite: {{ $dat->capacite }}</p>
-                    <form action="/Chambre/delete/{{$dat->id}}" method="POST">
+                    {{-- delete --}}
+                    <form action="{{route('Chambre.destroy',[$dat->id])}}" method="POST">
                         @csrf
                         @method('delete')
-                        <button href="" type="submit" class="btn btn-danger">delete</button>
+                        <button type="submit" class="btn btn-danger">delete</button>
                     </form>
-                    <a href="/Chambre/edit/{{ $dat->id }}" class="btn btn-success">edit</a>
-                    <a href="/Chambre/show/{{ $dat->id }}" class="btn btn-primary">show</a>
+                    {{-- edit --}}
+                    <a href="{{ route('Chambre.edit', [$dat->id]) }}" class="btn btn-success">edit</a>
+                    {{-- show --}}
+                    <a href="{{ route('Chambre.show', [$dat->id]) }}" class="btn btn-primary">show</a>
                 </div>
             </div>
         @empty

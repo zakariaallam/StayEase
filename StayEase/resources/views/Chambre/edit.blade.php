@@ -37,8 +37,9 @@
        <div class="row row-cols-1 justify-content-center row-cols-md-2 g-4">
 
 
-        <form action="/Chambre/edit/{{$Chambre->id}}" method="POST">
+        <form action="{{ route('Chambre.update', [$Chambre->id]) }}" method="POST">
             @csrf
+            @method('put')
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">numero chambre</label>
                 <input type="text" name="numero" value="{{$Chambre->numero}}" class="form-control">
@@ -100,7 +101,7 @@
                 </select>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
-            <a href="/Chambre" class="btn btn-secondary">exit</a>
+            <a href="{{ route('Chambre.index')}}" class="btn btn-secondary">exit</a>
         </form>
     </div>
 

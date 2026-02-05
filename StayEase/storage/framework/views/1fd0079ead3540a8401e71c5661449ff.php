@@ -31,7 +31,7 @@
     </nav>
     
 
-    <a type="button" href="/Chambre/add" class="btn btn-primary">add</a>
+    <a type="button" href="<?php echo e(route('Chambre.create')); ?>" class="btn btn-primary">add</a>
     <div class="row row-cols-1 row-cols-md-2 g-4">
 
         <?php $__empty_1 = true; $__currentLoopData = $data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $dat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
@@ -42,13 +42,16 @@
                     <p class="card-text">description: <?php echo e($dat->description); ?></p>
                     <p class="card-text">statut: <?php echo e($dat->statut); ?></p>
                     <p class="card-text">capacite: <?php echo e($dat->capacite); ?></p>
-                    <form action="/Chambre/delete/<?php echo e($dat->id); ?>" method="POST">
+                    
+                    <form action="<?php echo e(route('Chambre.destroy',[$dat->id])); ?>" method="POST">
                         <?php echo csrf_field(); ?>
                         <?php echo method_field('delete'); ?>
-                        <button href="" type="submit" class="btn btn-danger">delete</button>
+                        <button type="submit" class="btn btn-danger">delete</button>
                     </form>
-                    <a href="/Chambre/edit/<?php echo e($dat->id); ?>" class="btn btn-success">edit</a>
-                    <a href="/Chambre/show/<?php echo e($dat->id); ?>" class="btn btn-primary">show</a>
+                    
+                    <a href="<?php echo e(route('Chambre.edit', [$dat->id])); ?>" class="btn btn-success">edit</a>
+                    
+                    <a href="<?php echo e(route('Chambre.show', [$dat->id])); ?>" class="btn btn-primary">show</a>
                 </div>
             </div>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
