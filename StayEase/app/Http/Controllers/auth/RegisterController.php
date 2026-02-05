@@ -14,12 +14,12 @@ class RegisterController extends Controller
             'name' => ['required','string'],
             'email' => ['required','email'],
             'password' => ['required'],
-            // 'role_id' => 1
+            'role_id' => ['required']
         ]);
         $userData['password'] = bcrypt($userData['password']);
-        $userData['role_id'] = 1;
         $user = User::create($userData);
-        Auth::login($user);
-        return redirect()->route('home');
+        // $request->session()->regenerate();
+        // Auth::login($user);
+        return redirect()->route('login');
     }
 }
