@@ -1,7 +1,7 @@
 <?php
 use App\Http\Controllers\auth\RegisterController;
+use App\Http\Controllers\auth\LoginController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LoginController;
 
 Route::get('/', function () {
     return view('welcome');
