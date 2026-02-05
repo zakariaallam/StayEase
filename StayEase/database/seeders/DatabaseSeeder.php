@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
     {
         // // User::factory(10)->create();
 
+
         // User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
@@ -27,6 +28,11 @@ class DatabaseSeeder extends Seeder
             'nom' => 'Hotel5',
             'adresse' => 'youssofia1',
             'description' => 'The best one',
+        ]);
+        User::factory()->create([
+            'name' => 'Soufyane el omrani',
+            'email' => 'soufyane@example.com',
+            'password' => '1234'
         ]);
     }
 }
