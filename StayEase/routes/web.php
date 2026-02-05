@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\auth\RegisterController;
 use App\Http\Controllers\auth\LoginController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -17,3 +18,4 @@ Route::view('home','home')->name('home');
 Route::view('register','auth.register');
 Route::post('register',RegisterController::class)->name('register.user');
 Route::view('admin','admin.dashboard')->name('admin');
+Route::post('roleSave',RoleController::class)->name('role.save');
