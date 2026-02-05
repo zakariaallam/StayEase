@@ -42,7 +42,7 @@
                 <p class="card-text">description: {{ $dat->description }}</p>
                 <p class="card-text">statut: {{ $dat->statut }}</p>
                 <p class="card-text">capacite: {{ $dat->capacite }}</p>
-                <a type="button" href="/Chambre" class="btn btn-danger">exit</a>
+                <a type="button" href="{{ route('Chambre.index') }}" class="btn btn-danger">exit</a>
             </div>
         </div>
     </div>

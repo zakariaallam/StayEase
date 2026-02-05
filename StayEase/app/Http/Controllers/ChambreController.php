@@ -79,7 +79,6 @@ class ChambreController extends Controller
      */
     public function edit(Chambre $Chambre)
     {
-
         return view('/Chambre.edit', [
             'hotel' => Hotel::all(),
             'Categorie' => Categorie::all(),
