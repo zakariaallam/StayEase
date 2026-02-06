@@ -32,6 +32,14 @@
         .form-shadow {
             box-shadow: 0 32px 64px -16px rgba(0,0,0,0.1);
         }
+        /* Custom styling for the select arrow to maintain the editorial look */
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1rem;
+        }
     </style>
 </head>
 <body class="bg-white dark:bg-[#0a0a0a] text-slate-900 dark:text-slate-100 antialiased font-sans hero-gradient min-h-screen flex flex-col justify-center items-center p-6">
@@ -52,9 +60,6 @@
 
             <form method="POST" action="{{ route('register.user') }}" class="space-y-5">
                 @csrf
-
-                <!-- Hidden Role ID for Ordinary Client (Value 2) -->
-                <input type="hidden" name="role_id" value="2">
 
                 <!-- Name -->
                 <div class="space-y-1.5">
@@ -108,6 +113,25 @@
                         class="w-full bg-slate-50 dark:bg-black/40 border {{ $errors->has('password') ? 'border-red-500' : 'border-slate-200 dark:border-white/10' }} px-4 py-3 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all placeholder:text-slate-300 dark:placeholder:text-slate-600"
                     >
                     @error('password') 
+                        <span class="text-[11px] font-medium text-red-500 mt-1 block ml-1">{{ $message }}</span> 
+                    @enderror
+                </div>
+
+                <!-- Account Type -->
+                <div class="space-y-1.5">
+                    <label for="role_id" class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 block ml-1">
+                        Account Classification
+                    </label>
+                    <select 
+                        name="role_id" 
+                        id="role_id" 
+                        required
+                        class="w-full bg-slate-50 dark:bg-black/40 border border-slate-200 dark:border-white/10 px-4 py-3 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-slate-600 dark:text-slate-300"
+                    >
+                        <option value="2">Client / Guest</option>
+                        <option value="1">Administrative Partner</option>
+                    </select>
+                    @error('role_id') 
                         <span class="text-[11px] font-medium text-red-500 mt-1 block ml-1">{{ $message }}</span> 
                     @enderror
                 </div>
