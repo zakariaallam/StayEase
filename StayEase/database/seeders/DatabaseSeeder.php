@@ -3,9 +3,12 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Database\Seeders\TagSeeder;
 use Illuminate\Database\Seeder;
-use App\Models\Hotel;
+use Database\Seeders\RoomSeeder;
+
+use Database\Seeders\PropertySeeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,23 +19,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // // User::factory(10)->create();
+        // User::factory(10)->create();
 
+        
+        $this->call([PropertySeeder::class]);
+        $this->call([hotelsSeeder::class]);
+        $this->call([TagSeeder::class]);
+        $this->call([RoomSeeder::class]);
 
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-
-        Hotel::factory()->create([
-            'nom' => 'Hotel5',
-            'adresse' => 'youssofia1',
-            'description' => 'The best one',
-        ]);
-        User::factory()->create([
-            'name' => 'Soufyane el omrani',
-            'email' => 'soufyane@example.com',
-            'password' => '1234'
-        ]);
-    }
+        
+    }   
 }

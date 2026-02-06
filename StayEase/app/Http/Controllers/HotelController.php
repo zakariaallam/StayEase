@@ -44,6 +44,7 @@ class HotelController extends Controller
             $path = $file->storeAs('hotels', $name, 'public');
             $validated['image'] = $path;
         }
+        
         Hotel::create($validated);
         return redirect()->route('hotels.index');
     }
