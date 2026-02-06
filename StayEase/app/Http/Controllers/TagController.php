@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+<<<<<<< HEAD
 use App\Models\Tag;
+=======
+>>>>>>> 4bf11cc0dce6c5f82c6215d1f01651307b497497
 use Illuminate\Http\Request;
 
 class TagController extends Controller
@@ -34,7 +37,11 @@ class TagController extends Controller
     /**
      * Display the specified resource.
      */
+<<<<<<< HEAD
     public function show(Tag $tag)
+=======
+    public function show(string $id)
+>>>>>>> 4bf11cc0dce6c5f82c6215d1f01651307b497497
     {
         //
     }
@@ -42,7 +49,11 @@ class TagController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
+<<<<<<< HEAD
     public function edit(Tag $tag)
+=======
+    public function edit(string $id)
+>>>>>>> 4bf11cc0dce6c5f82c6215d1f01651307b497497
     {
         //
     }
@@ -50,7 +61,11 @@ class TagController extends Controller
     /**
      * Update the specified resource in storage.
      */
+<<<<<<< HEAD
     public function update(Request $request, Tag $tag)
+=======
+    public function update(Request $request, string $id)
+>>>>>>> 4bf11cc0dce6c5f82c6215d1f01651307b497497
     {
         //
     }
@@ -58,7 +73,11 @@ class TagController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+<<<<<<< HEAD
     public function destroy(Tag $tag)
+=======
+    public function destroy(string $id)
+>>>>>>> 4bf11cc0dce6c5f82c6215d1f01651307b497497
     {
         //
     }

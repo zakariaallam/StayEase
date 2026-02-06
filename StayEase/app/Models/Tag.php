@@ -6,5 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tag extends Model
 {
-    //
+    protected $fillable = ['name', 'slug'];
+    public function Room()
+    {
+        return $this->belongsToMany(Room::class, 'rooms_tags');
+    }
 }
