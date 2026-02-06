@@ -12,7 +12,7 @@
 
 <body>
 
-<a type="button" href="{{ route('Chambre.index') }}" class="btn btn-primary">Chambre</a>
+<a type="button" href="/rooms" class="btn btn-primary">Chambre</a>
 
 
 
