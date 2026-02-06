@@ -57,14 +57,14 @@
                 <div class="bg-white rounded-[2.5rem] p-10 shadow-sm border border-slate-100">
                     <div class="flex justify-between items-center mb-8">
                         <h2 class="text-2xl font-bold text-slate-800">Galerie Photos</h2>
-                        <a href="{{ route('hotels.galerie', $hotel->id) }}" class="text-indigo-600 font-bold hover:underline">
+                        {{-- <a href="{{ route('hotels.galerie', $hotel->id) }}" class="text-indigo-600 font-bold hover:underline">
                             Gérer les photos
-                        </a>
+                        </a> --}}
                     </div>
 
                     <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                         {{-- On suppose ici que vous avez une relation "images" --}}
-                        @forelse($hotel->images as $img)
+                        {{-- @forelse($hotel->images as $img)
                             <div class="h-40 rounded-2xl overflow-hidden shadow-sm">
                                 <img src="{{ asset('storage/' . $img->chemin) }}" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
                             </div>
@@ -72,7 +72,7 @@
                             <div class="col-span-full py-12 text-center bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200">
                                 <p class="text-slate-400 font-medium text-sm italic">Aucune photo supplémentaire disponible.</p>
                             </div>
-                        @endforelse
+                        @endforelse --}}
                     </div>
                 </div>
             </div>
