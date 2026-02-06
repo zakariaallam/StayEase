@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tag;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
 
 class TagController extends Controller
 {
@@ -35,7 +33,7 @@ class TagController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Tag $tag)
+    public function show(string $id)
     {
         //
     }
@@ -43,7 +41,7 @@ class TagController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Tag $tag)
+    public function edit(string $id)
     {
         //
     }
@@ -51,7 +49,7 @@ class TagController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Tag $tag)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -59,7 +57,7 @@ class TagController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tag $tag)
+    public function destroy(string $id)
     {
         //
     }
