@@ -53,7 +53,7 @@ class HotelController extends Controller
      */
     public function show(Hotel $hotel)
     {
-        //
+        return view('hotels.show', compact('hotel'));
     }
 
     /**
@@ -73,7 +73,7 @@ class HotelController extends Controller
             'nom' => 'required|max:255',
             'adresse' => 'required|max:400',
             'description' => 'nullable',
-            'image' => 'required|image|mimes:jpg,jpeg,png,webp,jfif|max:2048',
+            'image' => 'image|mimes:jpg,jpeg,png,webp,jfif|max:2048',
         ]);
         if ($request->hasFile('image')) {
             // delete pic

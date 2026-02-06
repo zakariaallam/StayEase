@@ -57,7 +57,7 @@
                 <div class="bg-white rounded-[2.5rem] p-10 shadow-sm border border-slate-100">
                     <div class="flex justify-between items-center mb-8">
                         <h2 class="text-2xl font-bold text-slate-800">Galerie Photos</h2>
-                        <a href="{{ route('hotels.galerie', $hotel->id) }}" class="text-indigo-600 font-bold hover:underline">
+                        {{-- <a href="{{ route('hotels.galerie', $hotel->id) }}" class="text-indigo-600 font-bold hover:underline"> --}}
                             Gérer les photos
                         </a>
                     </div>

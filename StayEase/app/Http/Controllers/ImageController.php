@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ImageController extends Controller
 {
@@ -65,7 +66,23 @@ class ImageController extends Controller
      */
     public function update(Request $request, Image $image)
     {
-        
+        $validated = $request->validate([
+            'titre' => 'required|max:255',
+            'image' => 'image|mimes:jpg,jpeg,png,webp,jfif|max:2048',
+        ]);
+        if ($request->hasFile('image')) {
+            // delete pic
+            if ($image->image && Storage::disk('public')->exists($image->image)) {
+                Storage::disk('public')->delete($image->image);
+            }
+            // reneme pic
+            $file = $request->file('image');
+            $name = time() . '_' . $file->getClientOriginalName();
+            $path = $file->storeAs('images', $name, 'public');
+            $validated['image'] = $path;
+        }
+        $image->update($validated);
+        return redirect()->route('images.index');
     }
 
     /**
