@@ -23,7 +23,7 @@ class HotelController extends Controller
      */
     public function create()
     {
-        return view('hotels.create');
+        //
     }
 
     /**
@@ -95,11 +95,6 @@ class HotelController extends Controller
      */
     public function destroy(Hotel $hotel)
     {
-        // delete pic
-        if ($hotel->image && Storage::disk('public')->exists($hotel->image)) {
-            Storage::disk('public')->delete($hotel->image);
-        }
-        $hotel->delete();
-        return redirect()->route('hotels.index');
+        //
     }
 }
