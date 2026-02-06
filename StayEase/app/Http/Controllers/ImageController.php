@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ImageController extends Controller
 {
@@ -12,7 +13,8 @@ class ImageController extends Controller
      */
     public function index()
     {
-        //
+        $images = DB::table('images')->get();
+        return view('images.index', compact('images'));
     }
 
     /**
@@ -20,7 +22,7 @@ class ImageController extends Controller
      */
     public function create()
     {
-        //
+        return view('images.create');
     }
 
     /**
@@ -28,7 +30,18 @@ class ImageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated=$request->validate([
+            'titre'=>'required|max:255',
+            'path_image'=>'required|image|mimes:jpg,jpeg,png,webp,jfif|max:2048',
+        ]);
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $name = time() . '_' . $file->getClientOriginalName();
+            $path = $file->storeAs('images', $name, 'public');
+            $validated['image'] = $path;
+        }
+        Image::create($validated);
+        return redirect()->route('images.index');
     }
 
     /**
@@ -44,7 +57,7 @@ class ImageController extends Controller
      */
     public function edit(Image $image)
     {
-        //
+        return view('images.edit',compact('image'));
     }
 
     /**
@@ -52,7 +65,7 @@ class ImageController extends Controller
      */
     public function update(Request $request, Image $image)
     {
-        //
+        
     }
 
     /**
