@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+<<<<<<< HEAD
 use App\Models\Tag;
 use App\Models\Hotel;
 use App\Models\Chambre;
@@ -9,6 +10,10 @@ use App\Models\Categorie;
 use App\Models\Propriete;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+=======
+use App\Models\Chambre;
+use Illuminate\Http\Request;
+>>>>>>> 54d174758d4c0a514a971ba0b228b80696bce5db
 
 class ChambreController extends Controller
 {
@@ -17,12 +22,16 @@ class ChambreController extends Controller
      */
     public function index()
     {
+<<<<<<< HEAD
 
 
         $data = Chambre::all();
         return view('Chambre.Chambre', [
             'data' => $data
         ]);
+=======
+        //
+>>>>>>> 54d174758d4c0a514a971ba0b228b80696bce5db
     }
 
     /**
@@ -30,6 +39,7 @@ class ChambreController extends Controller
      */
     public function create()
     {
+<<<<<<< HEAD
 
 
 
@@ -39,6 +49,9 @@ class ChambreController extends Controller
             'Tag' => Tag::all(),
             'Propriete' => Propriete::all()
         ]);
+=======
+        //
+>>>>>>> 54d174758d4c0a514a971ba0b228b80696bce5db
     }
 
     /**
@@ -46,6 +59,7 @@ class ChambreController extends Controller
      */
     public function store(Request $request)
     {
+<<<<<<< HEAD
         // dd($request);
         $validi = $request->validate([
             'numero' => 'required',
@@ -60,22 +74,32 @@ class ChambreController extends Controller
         ]);
         Chambre::create($validi);
         return redirect('/Chambre');
+=======
+        //
+>>>>>>> 54d174758d4c0a514a971ba0b228b80696bce5db
     }
 
     /**
      * Display the specified resource.
      */
+<<<<<<< HEAD
     public function show(Chambre $Chambre)
     {
 
         return view('/Chambre.show', [
             'dat' => $Chambre
         ]);
+=======
+    public function show(Chambre $chambre)
+    {
+        //
+>>>>>>> 54d174758d4c0a514a971ba0b228b80696bce5db
     }
 
     /**
      * Show the form for editing the specified resource.
      */
+<<<<<<< HEAD
     public function edit(Chambre $Chambre)
     {
 
@@ -86,11 +110,17 @@ class ChambreController extends Controller
             'Propriete' => Propriete::all(),
             'Chambre'=>$Chambre
         ]);
+=======
+    public function edit(Chambre $chambre)
+    {
+        //
+>>>>>>> 54d174758d4c0a514a971ba0b228b80696bce5db
     }
 
     /**
      * Update the specified resource in storage.
      */
+<<<<<<< HEAD
     public function update(Request $request, Chambre $Chambre)
     {
         // dd($request);
@@ -106,14 +136,25 @@ class ChambreController extends Controller
             'propriete_id' => $request->propriete_id
         ]);
         return  redirect('/Chambre');
+=======
+    public function update(Request $request, Chambre $chambre)
+    {
+        //
+>>>>>>> 54d174758d4c0a514a971ba0b228b80696bce5db
     }
 
     /**
      * Remove the specified resource from storage.
      */
+<<<<<<< HEAD
     public function destroy(Chambre $Chambre)
     {
         $Chambre->delete();
         return  redirect('/Chambre');
+=======
+    public function destroy(Chambre $chambre)
+    {
+        //
+>>>>>>> 54d174758d4c0a514a971ba0b228b80696bce5db
     }
 }
