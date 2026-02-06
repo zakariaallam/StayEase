@@ -3,12 +3,14 @@ use App\Http\Controllers\auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ImageController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::resource('hotels',HotelController::class);
+Route::resource('images',ImageController::class);
 
 
 Route::get('login',function(){
