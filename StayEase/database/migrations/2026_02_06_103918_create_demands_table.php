@@ -19,6 +19,7 @@ return new class extends Migration
             $table->timestamp('approval_date')->nullable(); 
             $table->timestamps();
         });
+        
     }
 
 
