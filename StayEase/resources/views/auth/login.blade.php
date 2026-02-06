@@ -111,7 +111,7 @@
 
         <!-- Support Info -->
         <p class="text-center mt-8 text-[11px] font-bold uppercase tracking-widest text-slate-400">
-            Need an account? <a href="#" class="text-indigo-600 hover:text-primary transition-colors ml-1">Contact Concierge</a>
+            Need an account? <a href="{{ route('register.user') }}" class="text-indigo-600 hover:text-primary transition-colors ml-1">Create account</a>
         </p>
     </div>
 
