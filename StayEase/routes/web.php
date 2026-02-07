@@ -1,10 +1,11 @@
 <?php
 
 use App\Http\Controllers\auth\RegisterController;
+use App\Http\Controllers\auth\LoginController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HotelController;
-use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ImageController;
 
 use App\Http\Controllers\RoomController;
@@ -50,3 +51,5 @@ Route::post('register',RegisterController::class)->name('register.user');
 
 Route::resource('rooms',RoomController::class);
 
+Route::view('admin','admin.dashboard')->name('admin');
+Route::post('roleSave', [RoleController::class, 'store'])->name('role.save');
