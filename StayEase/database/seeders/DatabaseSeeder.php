@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use Database\Seeders\TagSeeder;
 use Illuminate\Database\Seeder;
 use Database\Seeders\RoomSeeder;
@@ -25,8 +24,6 @@ class DatabaseSeeder extends Seeder
         $this->call([PropertySeeder::class]);
         $this->call([hotelsSeeder::class]);
         $this->call([TagSeeder::class]);
-        $this->call([RoomSeeder::class]);
-
-        
+        $this->call([RoomSeeder::class]);    
     }   
 }

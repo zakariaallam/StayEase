@@ -64,7 +64,7 @@
 
                     <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                         {{-- On suppose ici que vous avez une relation "images" --}}
-                        @forelse($hotel->images as $img)
+                        {{-- @forelse($hotel->images as $img)
                             <div class="h-40 rounded-2xl overflow-hidden shadow-sm">
                                 <img src="{{ asset('storage/' . $img->chemin) }}" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
                             </div>
@@ -72,7 +72,7 @@
                             <div class="col-span-full py-12 text-center bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200">
                                 <p class="text-slate-400 font-medium text-sm italic">Aucune photo supplémentaire disponible.</p>
                             </div>
-                        @endforelse
+                        @endforelse --}}
                     </div>
                 </div>
             </div>
@@ -104,8 +104,8 @@
 
                 <div class="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-sm text-center">
                     <p class="text-slate-400 text-sm mb-4">Besoin de modifier ces informations ?</p>
-                    <a href="{{ route('hotels.edit', $hotel->id) }}" class="block w-full py-4 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-2xl transition-all">
-                        Editer le profil
+                    <a href="{{ route('rooms.create') }}" class="block w-full py-4 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-2xl transition-all">
+                        Ajouter une Chambre
                     </a>
                 </div>
             </div>

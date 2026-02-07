@@ -6,7 +6,6 @@ use App\Models\Hotel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-
 class HotelController extends Controller
 {
     /**
@@ -24,7 +23,7 @@ class HotelController extends Controller
      */
     public function create()
     {
-        return view('hotels.create');
+        //
     }
 
     /**
@@ -96,11 +95,6 @@ class HotelController extends Controller
      */
     public function destroy(Hotel $hotel)
     {
-        // delete pic
-        if ($hotel->image && Storage::disk('public')->exists($hotel->image)) {
-            Storage::disk('public')->delete($hotel->image);
-        }
-        $hotel->delete();
-        return redirect()->route('hotels.index');
+        //
     }
 }
