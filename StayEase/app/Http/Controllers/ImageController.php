@@ -102,7 +102,15 @@ class ImageController extends Controller
      */
     public function destroy(Image $image)
     {
+        // delete pic from stor
+        if ($image->image_path && Storage::disk('public')->exists($image->image_path)) {
+            Storage::disk('public')->delete($image->image_path);
+        }
+
+        $hotel_id = $image->hotel_id;
         $image->delete();
-        return redirect()->route('hotels.show');
+
+        return redirect()->route('hotels.show', $hotel_id);
     }
+
 }

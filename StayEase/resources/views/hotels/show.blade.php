@@ -73,29 +73,43 @@
 
                 <div class="bg-white rounded-[2.5rem] p-10 shadow-sm border border-slate-100 space-y-10">
 
-                    {{-- ===== Ajouter des photos ===== --}}
                     <div>
                         <h2 class="text-2xl font-bold text-slate-800 mb-6">Ajouter des photos</h2>
 
                         <form action="{{ route('images.store') }}" method="POST" enctype="multipart/form-data"
-                            class="space-y-4">
+                            class="bg-slate-50 p-6 rounded-[2rem] border border-slate-100 space-y-5">
                             @csrf
-
                             <input type="hidden" name="hotel_id" value="{{ $hotel->id }}">
 
-                            <input type="text" name="titre" placeholder="Titre (optionnel)"
-                                class="w-full border rounded-xl p-3">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold uppercase text-slate-400 mb-2 ml-2">Titre de
+                                        l'image</label>
+                                    <input type="text" name="titre" placeholder="Ex: Vue sur mer..."
+                                        class="w-full bg-white border-0 ring-1 ring-slate-200 focus:ring-2 focus:ring-indigo-500 rounded-xl p-3 text-sm transition-all outline-none">
+                                </div>
 
-                            <input type="file" name="images[]" multiple class="w-full border rounded-xl p-3">
+                                <div>
+                                    <label
+                                        class="block text-xs font-bold uppercase text-slate-400 mb-2 ml-2">Sélectionner
+                                        les fichiers</label>
+                                    <input type="file" name="images[]" multiple
+                                        class="w-full bg-white border-0 ring-1 ring-slate-200 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 rounded-xl p-[6px] text-sm transition-all outline-none">
+                                </div>
+                            </div>
 
-                            <button type="submit" class="px-6 py-3 bg-indigo-600 text-white font-bold rounded-xl">
-                                Ajouter les photos
+                            <button type="submit"
+                                class="w-full flex items-center justify-center gap-2 px-6 py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-2xl shadow-lg shadow-indigo-200 transition-all active:scale-[0.98]">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 4v16m8-8H4" />
+                                </svg>
+                                Confirmer l'ajout à la galerie
                             </button>
                         </form>
 
                     </div>
 
-                    {{-- ===== Galerie ===== --}}
                     <div>
                         <h2 class="text-2xl font-bold text-slate-800 mb-6">Galerie Photos</h2>
 
@@ -106,10 +120,28 @@
                                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
 
                                     <div
-                                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-end p-3">
+                                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex flex-col justify-end p-3 space-y-2">
+
                                         <p class="text-white text-sm font-semibold">
                                             {{ $img->titre }}
                                         </p>
+
+                                        <div class="flex gap-2">
+                                            <a href="{{ route('images.edit', $img->id) }}"
+                                                class="px-2 py-1 bg-yellow-500 text-white text-xs rounded hover:bg-yellow-600 transition">
+                                                Modifier
+                                            </a>
+
+                                            <form action="{{ route('images.destroy', $img->id) }}" method="POST"
+                                                onsubmit="return confirm('Voulez-vous vraiment supprimer cette image ?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                    class="px-2 py-1 bg-red-500 text-white text-xs rounded hover:bg-red-600 transition">
+                                                    Supprimer
+                                                </button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             @empty
@@ -121,6 +153,7 @@
                                 </div>
                             @endforelse
                         </div>
+
                     </div>
 
                 </div>
