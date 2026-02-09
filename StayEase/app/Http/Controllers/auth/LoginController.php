@@ -29,7 +29,7 @@ class LoginController extends Controller
                 return redirect()->intended(route('hotels'));
             }
             else{
-                return redirect()->intended(route('/'));
+                return redirect()->intended(route('client.home'));
             }
             
         }
