@@ -12,22 +12,20 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('role_id')
-                ->after('email')
-                ->nullable()
-                ->constrained('roles')
+            $table->string('role')->after('email')->nullable();
+            $table->foreign('role')
+                ->on('roles')
+                ->references('role')
+                ->cascadeOnUpdate()
                 ->nullOnDelete();
         });
     }
 
-
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropConstrainedForeignId('role_id');
+            $table->dropForeign(['role']);
+            $table->dropColumn('role');
         });
     }
 };
