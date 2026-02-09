@@ -22,14 +22,14 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             $user = Auth::user();
-            if ($user->role_id == 1) {
+            if ($user->role == "admin") {
                 return redirect()->intended(route('admin'));
             }
-            else if($user->role_id == 3){
-                return redirect()->intended(route('gerant'));
+            else if($user->role_id == "manager" ){
+                return redirect()->intended(route('hotels'));
             }
             else{
-                return redirect()->intended(route('home'));
+                return redirect()->intended(route('/'));
             }
             
         }
