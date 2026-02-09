@@ -6,5 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Hotel extends Model
 {
-    protected $fillable = ['nom','description','adresse','image'];
+    protected $fillable = ['nom', 'description', 'adresse', 'image'];
+    public function rooms()
+    {
+        return $this->hasMany(Room::class);
+    }
+    public function images()
+    {
+        return $this->hasMany(Image::class);
+    }
 }
