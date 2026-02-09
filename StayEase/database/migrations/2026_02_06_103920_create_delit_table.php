@@ -11,19 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('roles', function (Blueprint $table) {
-            $table->id();
-            $table->boolean('permession');
-            $table->string('role')->unique();
-            $table->timestamps();
-        });
+        
+        Schema::dropIfExists('tags');
+        Schema::dropIfExists('categories');
+        Schema::dropIfExists('proprietes');
+        Schema::dropIfExists('chambres');
+        
+        
     }
+
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('roles');
     }
 };
