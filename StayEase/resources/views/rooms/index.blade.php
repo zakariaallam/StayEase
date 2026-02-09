@@ -11,57 +11,94 @@
 </head>
 
 <body>
-    <a type="button" href="{{ route('rooms.create') }}" class="btn btn-success">add rooms</a>
-    <form method='GET' action='{{ route('rooms.index') }}'>
-        <select name='tag'>
-            <option value=''>Tous les tags</option>
-            @foreach ($allTags as $tag)
-                <option value='{{ $tag->id }}'>{{ $tag->name }}</option>
-            @endforeach
-        </select>
-        <select name='property'>
-            <option value=''>Toutes les propriétés</option>
-            @foreach ($allProperties as $prop)
-                <option value='{{ $prop->id }}'>{{ $prop->name }}</option>
-            @endforeach
-        </select>
-        <button type='submit' class="btn btn-info">Filtrer</button>
-    </form>
-    {{-- lllllllllllllllllllllllllllllllllllllllllllllllllllll --}}
-    <div class="row row-cols-1 row-cols-md-2 g-4">
-    
-    @forelse ($rooms as $dat)
-        <div class="card" style="width: 20rem;">
-            <div class="card-body">
-                <img src="{{ $dat->image }}?random={{ $dat->id }}" class="card-img-top" alt="...">
-                
-                
-                
-                <h5 class="card-title">{{ $dat->number }}</h5>
-                <p class="card-text">price_per_night: {{ $dat->price_per_night }}€/nuit</p>
-                <p class="card-text">capacity: {{ $dat->capacity }}</p>
-                <p class="card-text">description: {{ $dat->description}}</p>
-                {{-- delete --}}
-                <form action="{{ route('rooms.destroy', [$dat->id]) }}" method="POST">
-                    @csrf
-                    @method('delete')
-                    <button type="submit" class="btn btn-danger">delete</button>
-                </form>
-                {{-- edit --}}
-                <a href="{{ route('rooms.edit', [$dat->id]) }}" class="btn btn-success">edit</a>
-                {{-- show --}}
-                <a href="{{ route('rooms.show', [$dat->id]) }}" class="btn btn-primary">show</a>
+    {{-- ------------------------------------------------------ --}}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Navbar scroll</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+                aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                </ul>
+
             </div>
         </div>
-    @empty
-        <div class="col-12 text-center mt-5">
-            <div class="alert alert-info">
-                <p class="mb-0">Aucune chambre n'est disponible pour le moment.</p>
+        <a type="button" href="{{ route('rooms.create') }}" class="btn btn-success">add</a>
+    </nav>
+    {{-- ------------------------------------------------------ --}}
+    <div class="card-group">
+        <div class="card">
+
+            <form method='GET' action='{{ route('rooms.index') }}'>
+
+                <div class="row">
+                    <div class="col">
+                        <select name='tag' class="form-control">
+                            <option value=''>Tous les tags</option>
+                            @foreach ($allTags as $tag)
+                                <option value='{{ $tag->id }}'>{{ $tag->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col">
+                        <select name='property' class="form-control">
+                            <option value=''>Toutes les propriétés</option>
+                            @foreach ($allProperties as $prop)
+                                <option value='{{ $prop->id }}'>{{ $prop->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col">
+                        <button type='submit' class="btn btn-info form-control">Filtrer</button>
+                    </div>
+                </div>
+            </form>
+            <div class="mb-3"></div>
+
+            {{-- lllllllllllllllllllllllllllllllllllllllllllllllllllll --}}
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+
+                @forelse ($rooms as $dat)
+                    <div class="card" style="width: 20rem;">
+                        <div class="card-body">
+                            
+                            <img src="{{ asset('storage/'.$dat->image)  }}" class="card-img-top"
+                                alt="https://picsum.photos/400/300">
+                            <h5 class="card-title">{{ $dat->number }}</h5>
+                            <p class="card-text">price_per_night: {{ $dat->price_per_night }}€/nuit</p>
+                            <p class="card-text">capacity: {{ $dat->capacity }}</p>
+                            <p class="card-text">description: {{ $dat->description }}</p>
+                            {{-- delete --}}
+                            <form action="{{ route('rooms.destroy', [$dat->id]) }}" method="POST">
+                                @csrf
+                                @method('delete')
+                                <button type="submit" class="btn btn-danger">delete</button>
+                            </form>
+                            {{-- edit --}}
+                            <a href="{{ route('rooms.edit', [$dat->id]) }}" class="btn btn-success">edit</a>
+                            {{-- show --}}
+                            <a href="{{ route('rooms.show', [$dat->id]) }}" class="btn btn-primary">show</a>
+                        </div>
+                    </div>
+                @empty
+                    <div class="col-12 text-center mt-5">
+                        <div class="alert alert-info">
+                            <p class="mb-0">Aucune chambre n'est disponible pour le moment.</p>
+                        </div>
+                    </div>
+                @endforelse
             </div>
         </div>
-    @endforelse
-</div>
-{{-- finlllllllllllllllllllllllllllllllllllllllllllllllll --}}
+    </div>
+    {{-- finlllllllllllllllllllllllllllllllllllllllllllllllll --}}
 
 
 

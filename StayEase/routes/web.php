@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\auth\RegisterController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RoomController;
 
 use App\Http\Controllers\HotelController;
-use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ImageController;
 
-use App\Http\Controllers\RoomController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ChambreController;
+use App\Http\Controllers\auth\RegisterController;
 
 Route::get('/', function () {
     return view('welcome');

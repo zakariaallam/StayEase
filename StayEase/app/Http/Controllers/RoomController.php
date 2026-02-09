@@ -8,6 +8,7 @@ use App\Models\hotel;
 use App\Models\Property;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redirect;
 
 class RoomController extends Controller
 {
@@ -16,7 +17,7 @@ class RoomController extends Controller
      */
     public function index(request $request)
     {
-        
+
         $query = Room::with('tags', 'properties');
         if ($tagId = $request->get('tag')) {
             $query->whereHas('tags', fn($q) => $q->where('id', $tagId));
@@ -57,14 +58,21 @@ class RoomController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         $validated = $request->validate([
             'hotel_id' => 'required|integer',
             'number' => 'required|string',
             'price_per_night' => 'required|numeric|min:0',
             'capacity' => 'required|integer|min:1',
             'description' => 'nullable|string',
-            'image' => 'nullable|string',
+            'image' => 'required|max:2048',
         ]);
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $name = time() . '_' . $file->getClientOriginalName();
+            $path = $file->storeAs('rooms', $name, 'public');
+            $validated['image'] = $path;
+        }
         $room = Room::create($validated);
         $room->tags()->sync($request->get('tags', []));
         $room->properties()->sync($request->get('properties', []));
@@ -85,15 +93,40 @@ class RoomController extends Controller
      */
     public function edit(room $room)
     {
-        dd($room);
+        // dd($room);
+        $hotel = hotel::all();
+        $Property = Property::all();
+        $Tag = Tag::all();
+        return view('rooms.edit', [
+            'hotel' => $hotel,
+            'Property' => $Property,
+            'Tag' => $Tag,
+            'room' => $room
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, room $room)
     {
-        //
+        $validated = $request->validate([
+            'hotel_id' => 'required|integer',
+            'number' => 'required|string',
+            'price_per_night' => 'required|numeric|min:0',
+            'capacity' => 'required|integer|min:1',
+            'description' => 'nullable|string',
+            'image' => 'nullable|string',
+        ]);
+        $room->update([
+            'hotel_id' => $request->hotel_id,
+            'number' => $request->number,
+            'price_per_night' => $request->price_per_night,
+            'capacity' => $request->capacity,
+            'description' => $request->hodescriptiontel_id,
+            'image' => $request->image,
+        ]);
+        return Redirect('/rooms');
     }
 
     /**

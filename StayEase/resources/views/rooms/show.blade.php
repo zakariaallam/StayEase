@@ -9,31 +9,40 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
+<ul class="nav navbar-nav navbar-right">
+   <li><a href="#">Sign Up</a></li>
+   <li><a href="#">Sign In</a></li>
+   <li><a href="#">About</a></li>
+ </ul>
 
 <body>
-    <h1>Chambre {{ $room->number }}</h1>
-    <p>Prix : {{ $room->price_per_night }} €/nuit</p>
-    <p>Capacité : {{ $room->capacity }} personnes</p>
-    <h3>Tags:
-        @forelse ($room->Tags as $item)
-            #{{ $item->name }}
-        @empty
-            
-        @endforelse </h3>
-    @foreach ($room->tags as $tag)
-        <span class="badge">{{ $tag->name }}</span>
-    @endforeach
-    <h3>Propriétés</h3>
-    @foreach ($room->properties as $property)   
-        <span> #    {{ $property->name }}</span>
-    @endforeach
-    <form action="{{ route('rooms.destroy', [$room->id]) }}" method="POST">
-        @csrf
-        @method('delete')
-        <button type="submit" class="btn btn-danger">delete</button>
-    </form>
-    <a type="button" href="{{ route('rooms.index') }}" class="btn btn-primary">exet</a>
-
+    <div class="card" style="width: 20rem;">
+        <div class="card-body">
+            <img src="{{ asset('storage/'.$room->image)  }}" class="card-img-top" alt="...">
+            <h1>Chambre {{ $room->number }}</h1>
+            <p>Prix : {{ $room->price_per_night }} €/nuit</p>
+            <p>Capacité : {{ $room->capacity }} personnes</p>
+            <h3>Tags:
+                @forelse ($room->Tags as $item)
+                    #{{ $item->name }}
+                @empty
+                @endforelse
+            </h3>
+            @foreach ($room->tags as $tag)
+                <span class="badge">{{ $tag->name }}</span>
+            @endforeach
+            <h3>Propriétés</h3>
+            @foreach ($room->properties as $property)
+                <span> # {{ $property->name }}</span>
+            @endforeach
+            <form action="{{ route('rooms.destroy', [$room->id]) }}" method="POST">
+                @csrf
+                @method('delete')
+                <button type="submit" class="btn btn-danger">delete</button>
+            </form>
+            <a type="button" href="{{ route('rooms.index') }}" class="btn btn-primary">exet</a>
+        </div>
+    </div>
 
 
 
