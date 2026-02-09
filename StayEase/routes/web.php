@@ -10,10 +10,10 @@ use App\Http\Controllers\ImageController;
 
 use App\Http\Controllers\RoomController;
 
-Route::get('/', function () {
+Route::post('/', function () {
     return view('welcome');
 });
-
+    
 // Route::get('/Chambre',[ChambreController::class,'index'])->name("Chambre.index");
 // Route::get('/Chambre/add',[ChambreController::class,'create'])->name("Chambre.create");
 // Route::post('/Chambre/add',[ChambreController::class,'store'])->name("Chambre.store");
