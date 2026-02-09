@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <form action="{{ route('rooms.store') }}" method="POST">
+    <form action="{{ route('rooms.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">numero chambre</label>
@@ -51,7 +51,7 @@
         </div>
         <div class="mb-3">
             <label for="formFile" class="form-label">image</label>
-            <input class="form-control" type="text" name="image" id="formFile">
+            <input class="form-control" type="file" name="image" id="formFile">
         </div>
         <div class="mb-3">
             <label name="tag_id" class="form-label">tag</label>
