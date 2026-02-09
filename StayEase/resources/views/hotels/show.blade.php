@@ -216,13 +216,37 @@
                 </div>
 
                 <div class="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-sm text-center">
-                    <p class="text-slate-400 text-sm mb-4">Besoin de modifier ces informations ?</p>
                     <a href="{{ route('rooms.create') }}"
                         class="block w-full py-4 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-2xl transition-all">
                         Ajouter une Chambre
                     </a>
                 </div>
             </div>
+            <h2 class="text-2xl font-bold mb-6">Chambres</h2>
+
+            <div class="space-y-4">
+                @forelse($hotel->rooms as $room)
+                    <div class="flex gap-4 p-4 border rounded-2xl">
+
+                        <img src="{{ asset('storage/' . $room->image) }}" class="w-24 h-24 object-cover rounded-xl">
+
+                        <div>
+                            <p class="font-bold text-lg">
+                                Chambre {{ $room->numero }}
+                            </p>
+                            <p class="text-slate-500">
+                                Capacité : {{ $room->capacity }} personnes
+                            </p>
+                        </div>
+
+                    </div>
+                @empty
+                    <p class="text-slate-400 italic">
+                        Aucune chambre pour ce hotel.
+                    </p>
+                @endforelse
+            </div>
+
         </div>
     </main>
 
