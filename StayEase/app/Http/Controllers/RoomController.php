@@ -8,6 +8,7 @@ use App\Models\hotel;
 use App\Models\Property;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
 
 class RoomController extends Controller
@@ -116,16 +117,20 @@ class RoomController extends Controller
             'price_per_night' => 'required|numeric|min:0',
             'capacity' => 'required|integer|min:1',
             'description' => 'nullable|string',
-            'image' => 'nullable|string',
+            'image' => 'required|max:2048',
         ]);
-        $room->update([
-            'hotel_id' => $request->hotel_id,
-            'number' => $request->number,
-            'price_per_night' => $request->price_per_night,
-            'capacity' => $request->capacity,
-            'description' => $request->hodescriptiontel_id,
-            'image' => $request->image,
-        ]);
+        // dd($request);
+        if ($request->hasFile('image')) {
+            if ($room->image && Storage::disk('public')->exists($room->image)) {
+                Storage::disk('public')->delete($room->image);
+            }
+            $file = $request->file('image');
+            $name = time() . '_' . $file->getClientOriginalName();
+            $path = $file->storeAs('rooms', $name, 'public');
+            $validated['image'] = $path;
+            // dd($path);
+        }
+        $room->update($validated);
         return Redirect('/rooms');
     }
 
@@ -137,4 +142,5 @@ class RoomController extends Controller
         $room->delete();
         return redirect()->route('rooms.index');
     }
+           
 }
