@@ -11,23 +11,47 @@
 </head>
 
 <body>
-    <form action="{{ route('rooms.store') }}" method="POST">
+{{-- ------------------------------------------------------ --}}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ route('rooms.index') }}">rooms</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+                aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+        <a type="button" href="{{ route('rooms.create') }}" class="btn btn-success">add</a>
+    </nav>
+    {{-- ------------------------------------------------------ --}}
+    <form action="{{ route('rooms.update',$room) }}" method="POST" enctype="multipart/form-data">>
         @csrf
+        @method('put')
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">numero chambre</label>
-            <input type="number" name="number" class="form-control">
+            <input type="number" name="number" value="{{ $room->number }}" class="form-control">
         </div>
         <div class="mb-3">
             <label class="form-label">price_per_night</label>
-            <input type="number" name="price_per_night" class="form-control">
+            <input type="number" name="price_per_night" value="{{ $room->price_per_night }}" class="form-control">
         </div>
         <div class="mb-3">
             <label class="form-label">capacity</label>
-            <input type="number" name="capacity" class="form-control">
+            <input type="number" name="capacity" value="{{ $room->capacity }}" class="form-control">
         </div>
         <div class="mb-3">
             <label class="form-label">description</label>
-            <input type="text" name="description" class="form-control">
+            <input type="text" name="description" value="{{ $room->description }}" class="form-control">
         </div>
         <div class="mb-3">
             <label name="hotel_id" class="form-label">hotel</label>
@@ -51,7 +75,7 @@
         </div>
         <div class="mb-3">
             <label for="formFile" class="form-label">image</label>
-            <input class="form-control" type="text" name="image" id="formFile">
+            <input class="form-control" value="{{ $room->image }}" type="file" name="image" id="formFile">
         </div>
         <div class="mb-3">
             <label name="tag_id" class="form-label">tag</label>

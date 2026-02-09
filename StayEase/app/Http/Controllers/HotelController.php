@@ -54,7 +54,11 @@ class HotelController extends Controller
      */
     public function show(Hotel $hotel)
     {
+<<<<<<< HEAD
         return view('hotels.show', compact('hotel'));
+=======
+       return view('hotels.show', compact('hotel'));
+>>>>>>> b4421f5de1ec0fd22d1a98e048be75f8fba83004
     }
 
     /**
