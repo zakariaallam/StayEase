@@ -6,7 +6,6 @@ use App\Models\Hotel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-
 class HotelController extends Controller
 {
     /**
@@ -22,9 +21,10 @@ class HotelController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Hotel $hotel)
     {
-        return view('hotels.create');
+        return view('hotels.create', compact('hotel'));
+
     }
 
     /**
@@ -44,7 +44,7 @@ class HotelController extends Controller
             $path = $file->storeAs('hotels', $name, 'public');
             $validated['image'] = $path;
         }
-        
+
         Hotel::create($validated);
         return redirect()->route('hotels.index');
     }
@@ -54,7 +54,15 @@ class HotelController extends Controller
      */
     public function show(Hotel $hotel)
     {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        $hotel->load('rooms');
+>>>>>>> fe4ed392a00f0c0716028f1fe1fd5500fc2f6479
+        return view('hotels.show', compact('hotel'));
+=======
        return view('hotels.show', compact('hotel'));
+>>>>>>> b4421f5de1ec0fd22d1a98e048be75f8fba83004
     }
 
     /**
@@ -74,7 +82,7 @@ class HotelController extends Controller
             'nom' => 'required|max:255',
             'adresse' => 'required|max:400',
             'description' => 'nullable',
-            'image' => 'required|image|mimes:jpg,jpeg,png,webp,jfif|max:2048',
+            'image' => 'image|mimes:jpg,jpeg,png,webp,jfif|max:2048',
         ]);
         if ($request->hasFile('image')) {
             // delete pic
@@ -96,10 +104,6 @@ class HotelController extends Controller
      */
     public function destroy(Hotel $hotel)
     {
-        // delete pic
-        if ($hotel->image && Storage::disk('public')->exists($hotel->image)) {
-            Storage::disk('public')->delete($hotel->image);
-        }
         $hotel->delete();
         return redirect()->route('hotels.index');
     }
