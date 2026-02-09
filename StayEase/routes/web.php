@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\auth\RegisterController;
 use App\Http\Controllers\auth\LoginController;
+use App\Http\Controllers\auth\LogoutController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 
@@ -10,10 +11,12 @@ use App\Http\Controllers\ImageController;
 
 use App\Http\Controllers\RoomController;
 
-Route::post('/', function () {
+Route::get('/', function () {
     return view('welcome');
 });
-    
+Route::post('/',function(){
+    return view('welcome');
+})->name('client.home');
 // Route::get('/Chambre',[ChambreController::class,'index'])->name("Chambre.index");
 // Route::get('/Chambre/add',[ChambreController::class,'create'])->name("Chambre.create");
 // Route::post('/Chambre/add',[ChambreController::class,'store'])->name("Chambre.store");
@@ -53,3 +56,4 @@ Route::resource('rooms',RoomController::class);
 
 Route::view('admin','admin.dashboard')->name('admin');
 Route::post('roleSave', [RoleController::class, 'store'])->name('role.save');
+Route::post('logout',[LogoutController::class,'logout'])->name('logout');
