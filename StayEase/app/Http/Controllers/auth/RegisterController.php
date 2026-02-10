@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\auth;
-
+use App\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -13,13 +13,12 @@ class RegisterController extends Controller
         $userData = $request->validate([
             'name' => ['required','string'],
             'email' => ['required','email'],
-            'password' => ['required'],
-            'role_id' => ['required']
+            'password' => ['required']
         ]);
+        $role_id = Role::where('role','client')->first()->id;
+        $userData['role_id'] = $role_id;
         $userData['password'] = bcrypt($userData['password']);
-        $user = User::create($userData);
-        // $request->session()->regenerate();
-        // Auth::login($user);
+        User::create($userData);
         return redirect()->route('login');
     }
 }
