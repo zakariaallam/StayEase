@@ -11,10 +11,6 @@ use App\Http\Controllers\HotelController;
 use App\Http\Controllers\ImageController;
 
 use App\Http\Controllers\ChambreController;
-<<<<<<< HEAD
-
-=======
->>>>>>> hotel_Branch
 
 Route::get('/', function () {
     return view('welcome');
@@ -62,7 +58,4 @@ Route::resource('rooms',RoomController::class);
 Route::view('admin','admin.dashboard')->name('admin')->middleware('Role');
 Route::post('roleSave', [RoleController::class, 'store'])->name('role.save');
 Route::post('logout',[LogoutController::class,'logout'])->name('logout');
-<<<<<<< HEAD
  
-=======
->>>>>>> hotel_Branch
