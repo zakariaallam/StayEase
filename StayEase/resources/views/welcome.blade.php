@@ -9,7 +9,6 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
 
-<<<<<<< HEAD
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -26,25 +25,6 @@
                 }
             }
         }
-=======
-<a type="button" href="{{ route('rooms.index') }}" class="btn btn-primary">Chambre</a>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
->>>>>>> b4421f5de1ec0fd22d1a98e048be75f8fba83004
     </script>
     <style>
         html { scroll-behavior: smooth; }
@@ -63,6 +43,7 @@
     </style>
 </head>
 <body class="bg-white dark:bg-[#0a0a0a] text-slate-900 dark:text-slate-100 antialiased font-sans hero-gradient">
+@dd(Auth::user())
     <!-- Navigation -->
     <header class="fixed top-0 left-0 right-0 z-50 glass-effect border-b border-slate-200/60 dark:border-white/10">
         <nav class="max-w-7xl mx-auto px-8 h-20 flex items-center justify-between">
