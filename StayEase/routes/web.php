@@ -20,6 +20,8 @@ Route::post('/', function () {
 })->name('client.home');
 Route::get('/', [HotelController::class, 'welcome'])->name('client.home');
 
+Route::get('/hotel/{hotel}/detail', [HotelController::class, 'showDetail'])->name('hotels.detail');
+
 // Route::get('/Chambre',[ChambreController::class,'index'])->name("Chambre.index");
 // Route::get('/Chambre/add',[ChambreController::class,'create'])->name("Chambre.create");
 // Route::post('/Chambre/add',[ChambreController::class,'store'])->name("Chambre.store");

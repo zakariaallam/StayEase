@@ -224,27 +224,44 @@
                     <div class="group cursor-pointer">
                         <div
                             class="aspect-[3/4] bg-slate-100 dark:bg-zinc-900 rounded-sm mb-6 overflow-hidden relative border border-slate-200/50 dark:border-white/5">
-                            <img src="{{ asset('storage/' . $hotel->image) }}" alt="Luxury Villa"
+
+                            <img src="{{ asset('storage/' . $hotel->image) }}" alt="{{ $hotel->nom }}"
                                 class="w-full h-full group-hover:scale-105 transition-transform duration-700">
+
                             <div class="absolute top-6 left-6">
                                 <span
-                                    class="bg-white/90 backdrop-blur-md text-black text-[9px] font-bold px-3 py-1 rounded-sm uppercase tracking-widest shadow-sm">Premium
-                                    Selection</span>
+                                    class="bg-white/90 backdrop-blur-md text-black text-[9px] font-bold px-3 py-1 rounded-sm uppercase tracking-widest shadow-sm">
+                                    Premium Selection
+                                </span>
                             </div>
-                            <a href="{{ route('hotels.show', $hotel->id) }}"
-                                class="font-bold text-slate-800 text-lg hover:text-indigo-600 transition-colors">
 
-                            </a>
+                            <!-- BUTTON -->
+                            <div
+                                class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition">
+                                <a href="{{ route('hotels.detail', $hotel) }}"
+                                    class="px-6 py-3 bg-white text-slate-900 text-sm font-semibold rounded-sm hover:bg-slate-100 transition">
+                                    Voir les détails
+                                </a>
+                            </div>
+
                         </div>
+
                         <div class="flex flex-col gap-1">
                             <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400">
-                                {{ $hotel->adresse }}</p>
+                                {{ $hotel->adresse }}
+                            </p>
+
                             <h3
                                 class="font-bold text-xl text-slate-900 dark:text-white group-hover:text-primary dark:group-hover:text-indigo-400 transition-colors">
-                                {{ $hotel->nom }}</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">Starting at $1,200 / night</p>
+                                {{ $hotel->nom }}
+                            </h3>
+
+                            <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">
+                                Starting at $1,200 / night
+                            </p>
                         </div>
                     </div>
+
                 @empty
                     <div class="col-span-full flex flex-col items-center justify-center py-6 text-center">
                         <svg class="w-16 h-16 text-slate-300 mb-6" fill="none" stroke="currentColor"
