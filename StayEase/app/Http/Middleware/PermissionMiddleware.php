@@ -14,12 +14,11 @@ class PermissionMiddleware
         if (!Auth::check()) {
             abort(401);
         }
-        $role = Auth::user();
-        // dd($role);
-        if ($role !== 'admin' || $role !== 'manager') {
+        $userRole = Auth::user()->role;
+        $allowedRoles = ['admin', 'manager'];
+        if (!in_array($userRole, $allowedRoles)) {
             abort(403, 'Access Denied: Admins and Managers only.');
         }
-
         return $next($request);
     }
 }
