@@ -9,15 +9,17 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PermissionMiddleware
 {
-    
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::check()){
+        if (!Auth::check()) {
             abort(401);
         }
-        if(Auth::user()->role?->role !== 'admin'){
-            abort(403);
+        $role = Auth::user();
+        // dd($role);
+        if ($role !== 'admin' || $role !== 'manager') {
+            abort(403, 'Access Denied: Admins and Managers only.');
         }
+
         return $next($request);
     }
 }

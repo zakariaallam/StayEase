@@ -54,6 +54,7 @@ Route::post('register',RegisterController::class)->name('register.user');
 
 Route::resource('rooms',RoomController::class);
 
-Route::view('admin','admin.dashboard')->name('admin');
+Route::view('admin','admin.dashboard')->name('admin')->middleware('Role');
 Route::post('roleSave', [RoleController::class, 'store'])->name('role.save');
 Route::post('logout',[LogoutController::class,'logout'])->name('logout');
+ 
