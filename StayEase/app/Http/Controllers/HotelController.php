@@ -54,15 +54,8 @@ class HotelController extends Controller
      */
     public function show(Hotel $hotel)
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
         $hotel->load('rooms');
->>>>>>> fe4ed392a00f0c0716028f1fe1fd5500fc2f6479
         return view('hotels.show', compact('hotel'));
-=======
-       return view('hotels.show', compact('hotel'));
->>>>>>> b4421f5de1ec0fd22d1a98e048be75f8fba83004
     }
 
     /**
