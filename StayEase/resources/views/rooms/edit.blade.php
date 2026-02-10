@@ -87,8 +87,8 @@
                             <label class="form-label fw-bold">Tag</label>
                             <select class="form-select" name="tag_id">
                                 @foreach ($Tag as $item)
-                                    <option value="{{ $item->id }}" {{ $room->tag_id == $item->id ? 'selected' : '' }}>
-                                        {{ $item->name }}
+                                    <option value="{{ $item->id }}" >
+                                        {{ $item->nom }}
                                     </option>
                                 @endforeach
                             </select>

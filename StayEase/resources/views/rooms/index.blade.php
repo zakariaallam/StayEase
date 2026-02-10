@@ -23,6 +23,10 @@
                     <a href="{{ route('rooms.create') }}" class="btn btn-success btn-sm">
                         <i class="bi bi-plus-lg"></i> Add New Room
                     </a>
+                    {{-- ---------------------------------------------------- --}}
+                    <a href="{{ route('createAndHotel',[1]) }}" class="btn btn-success btn-sm">
+                        <i class="bi bi-plus-lg"></i> test
+                    </a>
                 </li>
             </ul>
         </div>
@@ -38,7 +42,7 @@
                         <select name='tag' class="form-select">
                             <option value=''>Tous les tags</option>
                             @foreach ($allTags as $tag)
-                                <option value='{{ $tag->id }}' {{ request('tag') == $tag->id ? 'selected' : '' }}>{{ $tag->name }}</option>
+                                <option value='{{ $tag->id }}'>{{ $tag->nom }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -46,7 +50,7 @@
                         <select name='property' class="form-select">
                             <option value=''>Toutes les propriétés</option>
                             @foreach ($allProperties as $prop)
-                                <option value='{{ $prop->id }}' {{ request('property') == $prop->id ? 'selected' : '' }}>{{ $prop->name }}</option>
+                                <option value='{{ $prop->id }}'>{{ $prop->name }}</option>
                             @endforeach
                         </select>
                     </div>

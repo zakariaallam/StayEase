@@ -57,13 +57,7 @@
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label fw-bold">Hôtel</label>
-                                    <select class="form-select" name="hotel_id">
-                                        @forelse ($hotel as $item)
-                                            <option value="{{ $item->id }}">{{ $item->nom }}</option>
-                                        @empty
-                                            <option value="0" disabled>-- Aucun hôtel --</option>
-                                        @endforelse
-                                    </select>
+                                    <input class="form-control" name="hotel_id" value="{{$hotel->id}}" readonly >
                                 </div>
 
                                 <div class="col-md-6 mb-3">
