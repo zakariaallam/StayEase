@@ -6,13 +6,12 @@ use App\Http\Controllers\auth\LogoutController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoomController;
-
+use App\Models\User;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\ImageController;
-
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ChambreController;
-
-
+use App\Models\Hotel;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -59,4 +58,13 @@ Route::resource('rooms',RoomController::class);
 Route::view('admin','admin.dashboard')->name('admin')->middleware('Role');
 Route::post('roleSave', [RoleController::class, 'store'])->name('role.save');
 Route::post('logout',[LogoutController::class,'logout'])->name('logout');
- 
+Route::post('validate',[RoleController::class,'validate'])->name('manager.validate');
+Route::get('/admin', function () {
+    $pendingHotels = Hotel::where('is_validate', false)->get();
+    $totalUsers = User::count();
+    $pendingApprovals = $pendingHotels->count();
+    $allusers = User::all();    
+    return view('admin.dashboard', compact('pendingHotels', 'totalUsers', 'pendingApprovals','allusers'));
+})->middleware('Role');
+Route::patch('/admin/hotels/{hotel}/approve', [AdminController::class, 'approveHotel'])
+    ->name('admin.hotels.approve');

@@ -11,20 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        
+        Schema::disableForeignKeyConstraints();
+
         Schema::dropIfExists('tags');
         Schema::dropIfExists('categories');
         Schema::dropIfExists('proprietes');
         Schema::dropIfExists('chambres');
-        
-        
+
+        Schema::enableForeignKeyConstraints();
     }
 
 
     /**
      * Reverse the migrations.
      */
-    public function down(): void
-    {
-    }
+    public function down(): void {}
 };
