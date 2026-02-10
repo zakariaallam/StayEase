@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categorie;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class CategorieController extends Controller
@@ -10,9 +11,11 @@ class CategorieController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($name)
     {
-        //
+        $id =DB::table('categories')->where('nom',$name)->value('id');
+        $chamber = DB::table('chambres')->where("categorie_id",$id)->get();
+        return view("categorie.index", ["chamber" => $chamber]);
     }
 
     /**

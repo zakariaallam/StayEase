@@ -116,4 +116,18 @@ class ChambreController extends Controller
         $Chambre->delete();
         return  redirect('/Chambre');
     }
+
+    public function filterDesponible(Request $request){
+        $validate = $request->validate([
+            "debu" => "required|date",
+            "fin" => "required|date|after:debu"
+        ]);
+
+        $chambres = Chambre::with('hotel.user.reservation')
+                    ->whereHas('hotel.user.reservation',function ($q) use ($request){
+                        $q->where('dateFin',$request->debu);
+                    })->orWhere('statut', 'disponible')
+                    ->get();
+         return view('filter',compact('chambres'));
+    }
 }

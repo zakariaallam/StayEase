@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Chambre;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 
@@ -10,9 +11,10 @@ class ReservationController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($id)
     {
-        //
+        $chambre = Chambre::where('id',$id)->first();
+        return view('reservation.index',compact('chambre'));
     }
 
     /**
