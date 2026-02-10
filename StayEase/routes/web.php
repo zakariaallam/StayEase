@@ -32,7 +32,7 @@ Route::get('/hotel/{hotel}/detail', [HotelController::class, 'showDetail'])->nam
 // Route::get('/Chambre/show/{Chambre}',[ChambreController::class,'show'])->name("Chambre.show");
 
 
-Route::resource('hotels', HotelController::class);
+Route::resource('hotels', HotelController::class)->middleware('Role');
 Route::resource('images', ImageController::class);
 
 
