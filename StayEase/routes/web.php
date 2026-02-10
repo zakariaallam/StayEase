@@ -15,9 +15,11 @@ use App\Http\Controllers\ChambreController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::post('/',function(){
+Route::post('/', function () {
     return view('welcome');
 })->name('client.home');
+Route::get('/', [HotelController::class, 'welcome'])->name('client.home');
+
 // Route::get('/Chambre',[ChambreController::class,'index'])->name("Chambre.index");
 // Route::get('/Chambre/add',[ChambreController::class,'create'])->name("Chambre.create");
 // Route::post('/Chambre/add',[ChambreController::class,'store'])->name("Chambre.store");
@@ -27,34 +29,34 @@ Route::post('/',function(){
 // Route::get('/Chambre/show/{Chambre}',[ChambreController::class,'show'])->name("Chambre.show");
 
 
-Route::resource('hotels',HotelController::class);
-Route::resource('images',ImageController::class);
+Route::resource('hotels', HotelController::class);
+Route::resource('images', ImageController::class);
 
 
-Route::get('login',function(){
+Route::get('login', function () {
     return view('auth.login');
 })->name('login');
 
-Route::post('login',LoginController::class)->name('login.attempt');
-Route::view('home','home')->name('home');
+Route::post('login', LoginController::class)->name('login.attempt');
+Route::view('home', 'home')->name('home');
 
-Route::view('register','auth.register');
-Route::post('register',RegisterController::class)->name('register.user');
+Route::view('register', 'auth.register');
+Route::post('register', RegisterController::class)->name('register.user');
 
 
-Route::get('login',function(){
+Route::get('login', function () {
     return view('auth.login');
 })->name('login');
 
-Route::post('login',LoginController::class)->name('login.attempt');
-Route::view('home','home')->name('home');
+Route::post('login', LoginController::class)->name('login.attempt');
+Route::view('home', 'home')->name('home');
 
-Route::view('register','auth.register');
-Route::post('register',RegisterController::class)->name('register.user');
-Route::post('register',RegisterController::class)->name('register.user');
+Route::view('register', 'auth.register');
+Route::post('register', RegisterController::class)->name('register.user');
+Route::post('register', RegisterController::class)->name('register.user');
 
-Route::resource('rooms',RoomController::class);
+Route::resource('rooms', RoomController::class);
 
-Route::view('admin','admin.dashboard')->name('admin');
+Route::view('admin', 'admin.dashboard')->name('admin')->middleware('Role');
 Route::post('roleSave', [RoleController::class, 'store'])->name('role.save');
-Route::post('logout',[LogoutController::class,'logout'])->name('logout');
+Route::post('logout', [LogoutController::class, 'logout'])->name('logout');

@@ -25,8 +25,8 @@ class LoginController extends Controller
             if ($user->role == "admin") {
                 return redirect()->intended(route('admin'));
             }
-            else if($user->role_id == "manager" ){
-                return redirect()->intended(route('hotels'));
+            else if($user->role  == "manager" ){
+                return redirect()->intended(route('hotels.index'));
             }
             else{
                 return redirect()->intended(route('client.home'));
