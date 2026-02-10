@@ -1,17 +1,18 @@
 <?php
 
-use App\Http\Controllers\auth\RegisterController;
-use App\Http\Controllers\auth\LoginController;
-use App\Http\Controllers\auth\LogoutController;
-use App\Http\Controllers\RoleController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RoomController;
 use App\Models\User;
+use App\Models\Hotel;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\RoomController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\ImageController;
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ChambreController;
-use App\Models\Hotel;
+use App\Http\Controllers\PaiementController;
+use App\Http\Controllers\auth\LoginController;
+use App\Http\Controllers\auth\LogoutController;
+use App\Http\Controllers\auth\RegisterController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,7 +28,7 @@ Route::get('/hotel/{hotel}/detail', [HotelController::class, 'showDetail'])->nam
 // Route::get('/Chambre/add',[ChambreController::class,'create'])->name("Chambre.create");
 // Route::post('/Chambre/add',[ChambreController::class,'store'])->name("Chambre.store");
 // Route::delete('/Chambre/delete/{Chambre}',[ChambreController::class,'destroy'])->name("Chambre.destroy");
-// Route::get('/Chambre/edit/{Chambre}',[ChambreController::class,'edit'])->name("Chambre.edit");
+// Route::get('/Chambre/edit/{Chambre}',[ChambreContbfroller::class,'edit'])->name("Chambre.edit");
 // Route::post('/Chambre/edit/{Chambre}',[ChambreController::class,'update'])->name("Chambre.update");
 // Route::get('/Chambre/show/{Chambre}',[ChambreController::class,'show'])->name("Chambre.show");
 
@@ -78,3 +79,13 @@ Route::get('/admin', function () {
 })->middleware('Role');
 Route::patch('/admin/hotels/{hotel}/approve', [AdminController::class, 'approveHotel'])
     ->name('admin.hotels.approve');
+
+//Stripe
+Route::get("/Paiement/{id}",[PaiementController::class,"index"])->name('reserv.index');
+Route::post("/Paiement",[PaiementController::class,"store"])->name('stripe.post');
+Route::get("/success",[PaiementController::class,"success"])->name('success');
+Route::get("/cancel",[PaiementController::class,"cancel"])->name('cancel');
+
+// Filtter
+
+Route::post("/",[ChambreController::class,"filterDesponible"])->name('filte.date');
