@@ -15,8 +15,26 @@ class HotelController extends Controller
     {
         $hotels = DB::table('hotels')->get();
         return view('hotels.index', compact('hotels'));
-
     }
+    public function welcome()
+    {
+        $hotels = Hotel::where('is_validate', true)->paginate(3);;
+
+        return view('welcome', compact('hotels'));
+    }
+
+    public function showDetail(Hotel $hotel)
+    {
+        if (!$hotel->is_validate) {
+            abort(404, "Hôtel non trouvé ou non validé.");
+        }
+
+        $hotel->load('images', 'rooms');
+
+        return view('hotels.detail', compact('hotel'));
+    }
+
+
 
     /**
      * Show the form for creating a new resource.
