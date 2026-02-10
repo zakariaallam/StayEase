@@ -54,7 +54,7 @@
                 @csrf
 
                 <!-- Hidden Role Assignment -->
-                <input type="hidden" name="role" value="client">
+                {{-- <input type="hidden" name="role" value="client"> --}}
 
                 <!-- Name -->
                 <div class="space-y-1.5">
