@@ -71,7 +71,6 @@
                     </p>
                 </div>
 
-<<<<<<< HEAD
                 <div class="bg-white rounded-[2.5rem] p-10 shadow-sm border border-slate-100 space-y-10">
 
                     <div>
@@ -155,27 +154,6 @@
                             @endforelse
                         </div>
 
-=======
-                <div class="bg-white rounded-[2.5rem] p-10 shadow-sm border border-slate-100">
-                    <div class="flex justify-between items-center mb-8">
-                        <h2 class="text-2xl font-bold text-slate-800">Galerie Photos</h2>
-                        {{-- <a href="{{ route('hotels.galerie', $hotel->id) }}" class="text-indigo-600 font-bold hover:underline">
-                            Gérer les photos
-                        </a> --}}
-                    </div>
-
-                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                        {{-- On suppose ici que vous avez une relation "images" --}}
-                        {{-- @forelse($hotel->images as $img)
-                            <div class="h-40 rounded-2xl overflow-hidden shadow-sm">
-                                <img src="{{ asset('storage/' . $img->chemin) }}" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
-                            </div>
-                        @empty
-                            <div class="col-span-full py-12 text-center bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200">
-                                <p class="text-slate-400 font-medium text-sm italic">Aucune photo supplémentaire disponible.</p>
-                            </div>
-                        @endforelse --}}
->>>>>>> b4421f5de1ec0fd22d1a98e048be75f8fba83004
                     </div>
 
                 </div>
@@ -226,26 +204,37 @@
 
             <div class="space-y-4">
                 @forelse($hotel->rooms as $room)
-                    <div class="flex gap-4 p-4 border rounded-2xl">
+                    <div class="flex gap-4 p-4 border rounded-2xl hover:shadow">
 
-                        <img src="{{ asset('storage/' . $room->image) }}" class="w-24 h-24 object-cover rounded-xl">
+                        <img src="{{ asset('storage/' . $room->image) }}" class="w-28 h-28 object-cover rounded-xl"
+                            alt="Chambre {{ $room->number }}">
 
-                        <div>
+                        <div class="flex-1">
                             <p class="font-bold text-lg">
-                                Chambre {{ $room->numero }}
+                                Chambre {{ $room->number }}
                             </p>
+
                             <p class="text-slate-500">
                                 Capacité : {{ $room->capacity }} personnes
                             </p>
+
+                            <p class="text-slate-400 text-sm">
+                                {{ Str::limit($room->description, 80) }}
+                            </p>
+                        </div>
+
+                        <div class="text-right font-bold text-indigo-600">
+                            {{ $room->price_per_night }} DH / nuit
                         </div>
 
                     </div>
                 @empty
                     <p class="text-slate-400 italic">
-                        Aucune chambre pour ce hotel.
+                        Aucune chambre pour cet hôtel.
                     </p>
                 @endforelse
             </div>
+
 
         </div>
     </main>
