@@ -27,5 +27,10 @@ class RoleController extends Controller
         return response()->json(['message' => 'Role created successfully'], 201);
     }
 
-    // ... keep other empty methods as they are
+    public function validate(Request $request,$user){
+        $newRole = $request->validate([
+            'new_role' => 'required'
+        ]);
+        // $user = 
+    }
 }

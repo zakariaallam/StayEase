@@ -1,382 +1,424 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stay Easy | Administration</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap');
+        :root {
+            --primary: #7367f0;
+            --primary-rgb: 115, 103, 240;
+            --success: #28c76f;
+            --danger: #ea5455;
+            --warning: #ff9f43;
+            --info: #00cfe8;
+            --bg-body: #f8f7fa;
+            --text-main: #5d596c;
+            --text-light: #a5a3ae;
+        }
+
         body {
             font-family: 'Public Sans', sans-serif;
-            background-color: #f4f7fa;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
         }
-        .sidebar-link.active {
-            background-color: #6366f1;
-            color: white;
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
+
+        /* Sidebar Vuexy Layout */
+        .v-sidebar {
+            width: 260px;
+            background: #fff;
+            box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.05);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 1000;
         }
-        .card {
-            background: white;
-            border-radius: 0.75rem;
-            border: 1px solid #e2e8f0;
-            transition: all 0.2s;
+
+        .v-main {
+            margin-left: 260px;
+            min-height: 100vh;
+            transition: all 0.3s ease;
         }
-        .view-section { display: none; }
-        .view-section.active { display: block; }
-        
-        /* Custom scrollbar for minimalist look */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; }
-        ::-webkit-scrollbar-thumb { background: #c7d2fe; border-radius: 10px; }
+
+        @media (max-width: 1024px) {
+            .v-sidebar {
+                transform: translateX(-100%);
+            }
+
+            .v-main {
+                margin-left: 0;
+            }
+        }
+
+        .nav-item {
+            margin: 0.2rem 1rem;
+            transition: all 0.2s ease;
+            border-radius: 0.375rem;
+            color: var(--text-main);
+        }
+
+        .nav-item:hover:not(.active) {
+            background-color: #f5f5f9;
+            transform: translateX(5px);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(72.47deg, var(--primary) 22.16%, rgba(115, 103, 240, 0.7) 76.47%);
+            color: #fff !important;
+            box-shadow: 0px 2px 6px rgba(var(--primary-rgb), 0.48);
+        }
+
+        .nav-item.active i {
+            color: #fff !important;
+        }
+
+        /* Floating Navbar */
+        .v-navbar {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            margin: 0.75rem 1.5rem 0;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(165, 163, 174, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Card Component */
+        .v-card {
+            background: #fff;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(165, 163, 174, 0.3);
+            border: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .v-card-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid #dbdade;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .v-card-body {
+            padding: 1.5rem;
+        }
+
+        .v-badge-pill {
+            padding: 0.35em 0.65em;
+            font-size: 0.75em;
+            font-weight: 600;
+            border-radius: 0.25rem;
+            text-transform: uppercase;
+        }
+
+        .v-badge-light-primary {
+            background: #e7e7ff;
+            color: var(--primary);
+        }
+
+        .v-badge-light-warning {
+            background: #fff3e0;
+            color: var(--warning);
+        }
+
+        .v-badge-light-danger {
+            background: #fceaea;
+            color: var(--danger);
+        }
+
+        .v-badge-light-success {
+            background: #e8f9ee;
+            color: var(--success);
+        }
+
+        .v-table thead th {
+            background-color: #f8f7fa;
+            color: var(--text-light);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #dbdade;
+        }
+
+        .tab-btn {
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            border-bottom: 2px solid var(--primary);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .view-section {
+            display: none;
+        }
+
+        .view-section.active {
+            display: block;
+        }
+
+        .v-modal-overlay {
+            background: rgba(15, 20, 32, 0.5);
+            backdrop-filter: blur(6px);
+            z-index: 2000;
+        }
     </style>
 </head>
-<body class="text-slate-700">
 
-    <div class="flex h-screen overflow-hidden">
-        <!-- Sidebar -->
-        <aside class="w-72 bg-white border-r border-slate-200 flex-shrink-0 hidden lg:flex flex-col">
-            <div class="p-8">
-                <div class="flex items-center gap-3 mb-8">
-                    <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-200">
-                        <i class="fas fa-hotel"></i>
-                    </div>
-                    <h1 class="text-xl font-bold tracking-tight text-slate-800">Stay Easy</h1>
+<body>
+
+    <div class="flex">
+        <!-- SIDEBAR -->
+        <aside class="v-sidebar flex flex-col">
+            <div class="px-6 py-8 flex items-center gap-3">
+                <div class="w-9 h-9 bg-[#7367f0] rounded-lg flex items-center justify-center shadow-lg">
+                    <i class="fas fa-paper-plane text-white text-lg"></i>
                 </div>
-                
-                <nav class="space-y-2">
-                    <p class="text-[11px] uppercase font-bold text-slate-400 mb-4 px-4 tracking-widest">Menu Principal</p>
-                    
-                    <a href="javascript:void(0)" onclick="showView('dashboard')" id="nav-dashboard" class="sidebar-link active flex items-center gap-3 px-4 py-3 rounded-lg transition-all group">
-                        <i class="fas fa-th-large w-5 text-center"></i>
-                        <span class="font-medium">Vue d'ensemble</span>
-                    </a>
-                    
-                    <a href="javascript:void(0)" onclick="showView('users')" id="nav-users" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all">
-                        <i class="fas fa-users w-5 text-center"></i>
-                        <span class="font-medium">Utilisateurs</span>
-                    </a>
-
-                    <a href="javascript:void(0)" onclick="showView('roles')" id="nav-roles" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all">
-                        <i class="fas fa-user-shield w-5 text-center"></i>
-                        <span class="font-medium">Gestion des Rôles</span>
-                    </a>
-
-                    <a href="javascript:void(0)" onclick="showView('moderation')" id="nav-moderation" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all relative">
-                        <i class="fas fa-gavel w-5 text-center"></i>
-                        <span class="font-medium">Modération</span>
-                        <span class="absolute right-4 bg-orange-500 text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold">3</span>
-                    </a>
-                    
-                    <div class="pt-6 border-t border-slate-100 mt-4">
-                        <p class="text-[11px] uppercase font-bold text-slate-400 mb-4 px-4 tracking-widest">Hébergement</p>
-                        <a href="#" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all">
-                            <i class="fas fa-building w-5 text-center"></i>
-                            <span class="font-medium">Hôtels</span>
-                        </a>
-                    </div>
-                </nav>
+                <h1 class="text-xl font-bold tracking-tight text-[#5d596c]">Stay Easy</h1>
             </div>
 
-            <div class="mt-auto p-6 bg-slate-50 border-t border-slate-200">
+            <nav class="flex-1 space-y-1 overflow-y-auto">
+                <p class="text-[11px] uppercase text-slate-400 font-bold px-8 mb-2 tracking-widest mt-2">Menu</p>
+                <a href="javascript:void(0)" onclick="showView('dashboard')" id="nav-dashboard"
+                    class="nav-item active flex items-center gap-3 px-4 py-2.5 text-sm font-medium">
+                    <i class="fas fa-chart-pie w-5"></i><span>Dashboard</span>
+                </a>
+                <a href="javascript:void(0)" onclick="showView('approvals')" id="nav-approvals"
+                    class="nav-item flex items-center gap-3 px-4 py-2.5 text-sm font-medium">
+                    <i class="fas fa-shield-check w-5 text-slate-400"></i><span>Approbations</span>
+                </a>
+                <p class="text-[11px] uppercase text-slate-400 font-bold px-8 mt-6 mb-2 tracking-widest">Gestion</p>
+                <a href="javascript:void(0)" onclick="showView('users')" id="nav-users"
+                    class="nav-item flex items-center gap-3 px-4 py-2.5 text-sm font-medium">
+                    <i class="fas fa-users w-5 text-slate-400"></i><span>Utilisateurs</span>
+                </a>
+                <a href="#" class="nav-item flex items-center gap-3 px-4 py-2.5 text-sm font-medium">
+                    <i class="fas fa-city w-5 text-slate-400"></i><span>Établissements</span>
+                </a>
+            </nav>
+
+            <div class="p-6 border-t border-slate-100 bg-slate-50/50">
                 <div class="flex items-center gap-3">
-                    <img src="https://ui-avatars.com/api/?name=Admin+User&background=6366f1&color=fff" class="w-10 h-10 rounded-full border-2 border-white shadow-sm" alt="Admin">
+                    <img src="https://ui-avatars.com/api/?name=Admin&background=7367f0&color=fff"
+                        class="w-9 h-9 rounded-full">
                     <div class="overflow-hidden">
-                        <p class="text-sm font-bold text-slate-800 truncate">{{ Auth::user()->name}}</p>
-                        <p class="text-xs text-slate-500 truncate">{{ Auth::user()->email}}</p>
+                        <p class="text-xs font-bold truncate">{{ Auth::user()->name ?? 'Super Admin' }}</p>
+                        <p class="text-[10px] text-slate-500 uppercase">Admin</p>
                     </div>
                 </div>
             </div>
         </aside>
 
-        <!-- Main Content -->
-        <main class="flex-1 overflow-y-auto">
-            <!-- Header -->
-            <header class="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-10 px-8 py-4 flex justify-between items-center">
-                <h2 id="view-title" class="text-lg font-semibold text-slate-800">Vue d'ensemble</h2>
-                <div class="flex items-center gap-6">
-                    <div class="relative hidden sm:block">
-                        <input type="text" placeholder="Recherche rapide..." class="pl-10 pr-4 py-2 bg-slate-100 border-transparent rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-indigo-500 transition-all w-64">
-                        <i class="fas fa-search absolute left-4 top-3 text-slate-400 text-xs"></i>
+        <!-- MAIN AREA -->
+        <div class="v-main flex-1">
+            <!-- NAVBAR -->
+            <header class="v-navbar px-6 py-3 flex justify-between items-center sticky top-3 z-40">
+                <div class="flex items-center gap-2 text-sm">
+                    <i class="fas fa-bars lg:hidden mr-4 cursor-pointer text-slate-500"></i>
+                    <span class="text-slate-400">Pages</span>
+                    <i class="fas fa-chevron-right text-[10px] text-slate-300"></i>
+                    <span class="font-semibold text-slate-700 uppercase text-xs tracking-wider"
+                        id="breadcrumb-title">Dashboard</span>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="relative">
+                        <i class="fas fa-bell text-slate-400 cursor-pointer"></i>
+                        <span
+                            class="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
                     </div>
-                    <button class="relative text-slate-500 hover:text-indigo-600 transition-colors">
-                        <i class="fas fa-bell"></i>
-                        <span class="absolute -top-1 -right-1 w-2 h-2 bg-rose-500 rounded-full border-2 border-white"></span>
+                    <div class="h-6 w-px bg-slate-200 mx-2"></div>
+                    <button
+                        class="bg-primary text-white px-4 py-1.5 rounded-md text-xs font-bold shadow-md hover:shadow-indigo-200 transition-all">
+                        Déconnexion
                     </button>
-                    <button class="bg-indigo-600 text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-indigo-700 transition-all shadow-md shadow-indigo-100">Déconnexion</button>
                 </div>
             </header>
 
-            <div class="p-8 max-w-7xl mx-auto">
-                
-                <!-- SECTION: DASHBOARD (STATISTICS + TABLE) -->
+            <div class="px-6 md:px-8 py-8 mt-4 max-w-[1440px] mx-auto">
+
+                <!-- VIEW: DASHBOARD -->
                 <div id="view-dashboard" class="view-section active">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                        <div class="card p-6 border-b-4 border-b-indigo-500">
-                            <div class="flex justify-between items-start mb-4">
-                                <div class="p-3 bg-indigo-50 text-indigo-600 rounded-xl"><i class="fas fa-users"></i></div>
-                                <span class="text-xs font-bold text-green-500 bg-green-50 px-2 py-1 rounded-md">+14%</span>
+                        <div class="v-card p-6">
+                            <div class="flex justify-between items-center mb-2">
+                                <h4 class="text-slate-400 text-xs font-bold uppercase">Utilisateurs</h4>
+                                <div class="w-8 h-8 bg-indigo-50 text-primary rounded flex items-center justify-center">
+                                    <i class="fas fa-user text-sm"></i></div>
                             </div>
-                            <h4 class="text-slate-400 text-sm font-medium">Utilisateurs</h4>
-                            <p class="text-2xl font-bold">2,456</p>
+                            <p class="text-2xl font-bold">{{ $totalUsers ?? '2,456' }}</p>
                         </div>
-                        <div class="card p-6 border-b-4 border-b-orange-500">
-                            <div class="flex justify-between items-start mb-4">
-                                <div class="p-3 bg-orange-50 text-orange-600 rounded-xl"><i class="fas fa-clock"></i></div>
-                                <span class="text-xs font-bold text-orange-500 bg-orange-50 px-2 py-1 rounded-md">3 En attente</span>
+                        <div class="v-card p-6 border-l-4 border-l-orange-400">
+                            <div class="flex justify-between items-center mb-2">
+                                <h4 class="text-slate-400 text-xs font-bold uppercase">En attente</h4>
+                                <div
+                                    class="w-8 h-8 bg-orange-50 text-orange-400 rounded flex items-center justify-center">
+                                    <i class="fas fa-clock text-sm"></i></div>
                             </div>
-                            <h4 class="text-slate-400 text-sm font-medium">Demandes Gérants</h4>
-                            <p class="text-2xl font-bold">18</p>
-                        </div>
-                        <div class="card p-6 border-b-4 border-b-emerald-500">
-                            <div class="flex justify-between items-start mb-4">
-                                <div class="p-3 bg-emerald-50 text-emerald-600 rounded-xl"><i class="fas fa-hotel"></i></div>
-                                <span class="text-xs font-bold text-green-500 bg-green-50 px-2 py-1 rounded-md">+5</span>
-                            </div>
-                            <h4 class="text-slate-400 text-sm font-medium">Hôtels Actifs</h4>
-                            <p class="text-2xl font-bold">142</p>
-                        </div>
-                        <div class="card p-6 border-b-4 border-b-rose-500">
-                            <div class="flex justify-between items-start mb-4">
-                                <div class="p-3 bg-rose-50 text-rose-600 rounded-xl"><i class="fas fa-chart-line"></i></div>
-                                <span class="text-xs font-bold text-indigo-400">Mensuel</span>
-                            </div>
-                            <h4 class="text-slate-400 text-sm font-medium">Revenu (Net)</h4>
-                            <p class="text-2xl font-bold">12,840€</p>
-                        </div>
-                    </div>
-
-                    <!-- New Table: Dernières Réservations -->
-                    <div class="card overflow-hidden mb-8">
-                        <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-white">
-                            <div>
-                                <h3 class="font-bold text-slate-800">Dernières Activités de Réservation</h3>
-                                <p class="text-xs text-slate-400 mt-1">Aperçu en temps réel des flux clients.</p>
-                            </div>
-                            <button class="text-indigo-600 text-sm font-semibold hover:underline">Voir tout</button>
-                        </div>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left">
-                                <thead class="bg-slate-50 text-slate-500 text-[11px] uppercase font-bold tracking-wider">
-                                    <tr>
-                                        <th class="px-6 py-4">Client</th>
-                                        <th class="px-6 py-4">Hôtel</th>
-                                        <th class="px-6 py-4">Date Séjour</th>
-                                        <th class="px-6 py-4">Montant</th>
-                                        <th class="px-6 py-4">Statut</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-slate-100 text-sm">
-                                    <tr class="hover:bg-slate-50 transition-colors">
-                                        <td class="px-6 py-4">
-                                            <div class="font-semibold">Sophie Martin</div>
-                                            <div class="text-[10px] text-slate-400">ID: #RES-9021</div>
-                                        </td>
-                                        <td class="px-6 py-4 text-slate-600">Grand Plaza Paris</td>
-                                        <td class="px-6 py-4 text-slate-500">12 - 15 Fév. 2024</td>
-                                        <td class="px-6 py-4 font-bold">450€</td>
-                                        <td class="px-6 py-4">
-                                            <span class="px-2 py-1 bg-green-100 text-green-700 text-[10px] font-bold rounded">Confirmé</span>
-                                        </td>
-                                    </tr>
-                                    <tr class="hover:bg-slate-50 transition-colors">
-                                        <td class="px-6 py-4">
-                                            <div class="font-semibold">Thomas Muller</div>
-                                            <div class="text-[10px] text-slate-400">ID: #RES-8842</div>
-                                        </td>
-                                        <td class="px-6 py-4 text-slate-600">Villa Azure Nice</td>
-                                        <td class="px-6 py-4 text-slate-500">18 - 20 Fév. 2024</td>
-                                        <td class="px-6 py-4 font-bold">280€</td>
-                                        <td class="px-6 py-4">
-                                            <span class="px-2 py-1 bg-orange-100 text-orange-700 text-[10px] font-bold rounded">En attente</span>
-                                        </td>
-                                    </tr>
-                                    <tr class="hover:bg-slate-50 transition-colors">
-                                        <td class="px-6 py-4">
-                                            <div class="font-semibold">Elena Rodriguez</div>
-                                            <div class="text-[10px] text-slate-400">ID: #RES-8710</div>
-                                        </td>
-                                        <td class="px-6 py-4 text-slate-600">Spa Resort Chamonix</td>
-                                        <td class="px-6 py-4 text-slate-500">05 - 10 Mars 2024</td>
-                                        <td class="px-6 py-4 font-bold">1,120€</td>
-                                        <td class="px-6 py-4">
-                                            <span class="px-2 py-1 bg-green-100 text-green-700 text-[10px] font-bold rounded">Confirmé</span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <p class="text-2xl font-bold">{{ $pendingApprovals ?? '5' }}</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- SECTION: USERS -->
-                <div id="view-users" class="view-section">
-                    <div class="card overflow-hidden shadow-sm">
-                        <div class="p-6 border-b border-slate-100 flex justify-between items-center">
-                            <h3 class="font-bold text-slate-800 text-lg">Liste des Utilisateurs</h3>
-                            <div class="flex gap-2">
-                                <button class="bg-indigo-50 text-indigo-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-100">Exporter</button>
-                                <button class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700">Ajouter</button>
-                            </div>
+                <!-- VIEW: APPROVALS -->
+                <div id="view-approvals" class="view-section">
+                    <div class="v-card overflow-hidden">
+                        <div class="flex border-b border-slate-100 bg-slate-50/50">
+                            <button onclick="toggleTab('managers')" id="btn-managers"
+                                class="tab-btn active px-8 py-5 text-sm font-bold flex items-center gap-3">
+                                <i class="fas fa-user-tie text-xs"></i> Demandes Gérants
+                            </button>
+                            <button onclick="toggleTab('hotels')" id="btn-hotels"
+                                class="tab-btn px-8 py-5 text-sm font-bold text-slate-400 flex items-center gap-3">
+                                <i class="fas fa-hotel text-xs"></i> Hôtels à Valider
+                            </button>
                         </div>
-                        <div class="overflow-x-auto">
-                            <table class="w-full">
-                                <thead class="bg-slate-50 text-slate-500 text-[11px] uppercase font-bold tracking-wider">
+
+                        <!-- TAB: MANAGERS -->
+                        <div id="tab-managers" class="p-0">
+                            <table class="w-full v-table text-left">
+                                <thead>
                                     <tr>
-                                        <th class="px-6 py-4 text-left">Utilisateur</th>
-                                        <th class="px-6 py-4 text-left">Rôle</th>
-                                        <th class="px-6 py-4 text-left">Statut</th>
-                                        <th class="px-6 py-4 text-center">Actions</th>
+                                        <th>Candidat</th>
+                                        <th>Justificatifs</th>
+                                        <th>Date</th>
+                                        <th class="text-center">Décision</th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-slate-100">
-                                    <tr class="hover:bg-slate-50">
-                                        <td class="px-6 py-4">
+                                <tbody class="text-sm divide-y divide-slate-100">
+                                    <tr class="hover:bg-slate-50/50 transition-all">
+                                        <td class="px-8 py-5">
                                             <div class="flex items-center gap-3">
-                                                <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center font-bold">JD</div>
+                                                <div
+                                                    class="w-9 h-9 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-bold text-xs shadow-sm">
+                                                    MB</div>
                                                 <div>
-                                                    <p class="text-sm font-bold">Jean Dupont</p>
-                                                    <p class="text-xs text-slate-500">jean@email.com</p>
+                                                    <p class="font-bold text-slate-700">Marc Boulanger</p>
+                                                    <p class="text-[11px] text-slate-400">marc.b@hotel.fr</p>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="px-6 py-4"><span class="px-2 py-1 bg-blue-50 text-blue-600 text-[10px] font-bold rounded uppercase">Client</span></td>
-                                        <td class="px-6 py-4"><span class="flex items-center gap-1.5 text-xs text-green-600"><span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span> Actif</span></td>
-                                        <td class="px-6 py-4">
-                                            <div class="flex justify-center gap-2">
-                                                <button class="p-2 text-slate-400 hover:text-indigo-600"><i class="fas fa-edit"></i></button>
-                                                <button onclick="confirmBan('Jean Dupont')" class="p-2 text-slate-400 hover:text-rose-600" title="Bannir"><i class="fas fa-user-slash"></i></button>
-                                            </div>
+                                        <td class="px-8 py-5">
+                                            <a href="#"
+                                                class="v-badge-pill v-badge-light-primary border-none cursor-pointer"><i
+                                                    class="fas fa-file-pdf mr-1"></i> KBIS.pdf</a>
                                         </td>
-                                    </tr>
-                                    <tr class="hover:bg-slate-50">
-                                        <td class="px-6 py-4">
-                                            <div class="flex items-center gap-3">
-                                                <div class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold">MR</div>
-                                                <div>
-                                                    <p class="text-sm font-bold">Marc Riviera</p>
-                                                    <p class="text-xs text-slate-500">marc@hotelcentral.fr</p>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4"><span class="px-2 py-1 bg-purple-50 text-purple-600 text-[10px] font-bold rounded uppercase">Gérant</span></td>
-                                        <td class="px-6 py-4"><span class="flex items-center gap-1.5 text-xs text-green-600"><span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span> Actif</span></td>
-                                        <td class="px-6 py-4">
+                                        <td class="px-8 py-5 text-slate-400 text-xs">Il y a 2h</td>
+                                        <td class="px-8 py-5 text-center">
                                             <div class="flex justify-center gap-2">
-                                                <button class="p-2 text-slate-400 hover:text-indigo-600"><i class="fas fa-edit"></i></button>
-                                                <button class="p-2 text-slate-400 hover:text-rose-600"><i class="fas fa-user-slash"></i></button>
+                                                <button onclick="openModal('approve', 'Marc')"
+                                                    class="w-8 h-8 bg-emerald-50 text-emerald-500 rounded-lg flex items-center justify-center hover:bg-emerald-500 hover:text-white transition-all"><i
+                                                        class="fas fa-check"></i></button>
+                                                <button onclick="openModal('reject', 'Marc')"
+                                                    class="w-8 h-8 bg-rose-50 text-rose-500 rounded-lg flex items-center justify-center hover:bg-rose-500 hover:text-white transition-all"><i
+                                                        class="fas fa-times"></i></button>
                                             </div>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                </div>
 
-                <!-- SECTION: ROLES -->
-                <div id="view-roles" class="view-section">
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                        <div class="card p-6 h-fit">
-                            <h3 class="font-bold text-slate-800 mb-4">Créer / Modifier un Rôle</h3>
-                            <form class="space-y-4" action="{{ route('role.save') }}" method="post">
-                                @csrf
-                                <div>
-                                    <label class="text-xs font-bold text-slate-500 uppercase">Nom du rôle</label>
-                                    <input type="text" placeholder="ex: Modérateur" name="role" class="w-full mt-1 p-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
-                                </div>
-                                {{-- <div>
-                                    <label class="text-xs font-bold text-slate-500 uppercase">Permissions</label>
-                                    <div class="mt-2 space-y-2">
-                                        <label class="flex items-center gap-2 text-sm"><input type="checkbox" class="rounded text-indigo-600"> Gérer les hôtels</label>
-                                        <label class="flex items-center gap-2 text-sm"><input type="checkbox" class="rounded text-indigo-600"> Voir les statistiques</label>
-                                        <label class="flex items-center gap-2 text-sm"><input type="checkbox" class="rounded text-indigo-600"> Bannir des membres</label>
+                        <!-- TAB: HOTELS -->
+                        <div id="tab-hotels" class="hidden p-8">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                @foreach ($pendingHotels as $pendingHotel)
+                                    <div
+                                        class="v-card border border-slate-100 overflow-hidden group flex flex-col h-full">
+                                        <div class="h-40 bg-slate-100 overflow-hidden">
+                                            <img src="{{ asset('storage/' . $pendingHotel->image) }}"
+                                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                        </div>
+                                        <div class="p-5 flex-1 flex flex-col">
+                                            <h4 class="font-bold text-slate-800 text-sm mb-1">
+                                                {{ $pendingHotel->name }}
+                                            </h4>
+                                            <p class="text-[10px] text-slate-400 uppercase mb-4">
+                                                {{ $pendingHotel->city }}, {{ $pendingHotel->adresse}}
+                                            </p>
+
+                                            <div class="mt-auto flex gap-2">
+                                                <form action="{{ route('admin.hotels.approve', $pendingHotel->id) }}"
+                                                    method="POST" class="flex-1">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <button type="submit"
+                                                        class="w-full bg-primary text-white text-xs font-bold py-2 rounded-lg shadow-sm">
+                                                        Publier
+                                                    </button>
+                                                </form>
+                                                <button class="px-3 bg-slate-50 text-slate-400 rounded-lg">
+                                                    <i class="fas fa-eye text-xs"></i>
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div> --}}
-                                <button type="submit" class="w-full bg-indigo-600 text-white py-3 rounded-lg font-bold text-sm hover:bg-indigo-700 transition-all shadow-md shadow-indigo-100">Enregistrer le rôle</button>
-                            </form>
-                        </div>
-                        
-                        <div class="lg:col-span-2 card overflow-hidden shadow-sm">
-                            <div class="p-6 border-b border-slate-100">
-                                <h3 class="font-bold text-slate-800">Rôles Existants</h3>
+                                @endforeach
+
                             </div>
-                            <table class="w-full">
-                                <thead class="bg-slate-50 text-slate-500 text-[11px] uppercase font-bold">
-                                    <tr>
-                                        <th class="px-6 py-4 text-left">Nom</th>
-                                        <th class="px-6 py-4 text-left">Utilisateurs</th>
-                                        <th class="px-6 py-4 text-right">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-slate-100 text-sm">
-                                    <tr>
-                                        <td class="px-6 py-4 font-bold text-indigo-600">Administrateur</td>
-                                        <td class="px-6 py-4 text-slate-500">2 membres</td>
-                                        <td class="px-6 py-4 text-right space-x-2">
-                                            <button class="text-slate-400 hover:text-indigo-600"><i class="fas fa-edit"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="px-6 py-4 font-bold text-purple-600">Gérant</td>
-                                        <td class="px-6 py-4 text-slate-500">45 membres</td>
-                                        <td class="px-6 py-4 text-right space-x-2">
-                                            <button class="text-slate-400 hover:text-indigo-600"><i class="fas fa-edit"></i></button>
-                                            <button class="text-slate-400 hover:text-rose-600"><i class="fas fa-trash"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="px-6 py-4 font-bold text-blue-600">Client</td>
-                                        <td class="px-6 py-4 text-slate-500">2,409 membres</td>
-                                        <td class="px-6 py-4 text-right space-x-2">
-                                            <button class="text-slate-400 hover:text-indigo-600"><i class="fas fa-edit"></i></button>
-                                            <button class="text-slate-400 hover:text-rose-600"><i class="fas fa-trash"></i></button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
 
-                <!-- SECTION: MODERATION -->
-                <div id="view-moderation" class="view-section">
-                    <div class="card overflow-hidden border-orange-100 shadow-sm">
-                        <div class="p-6 bg-orange-50/50 border-b border-orange-100 flex justify-between items-center">
-                            <div>
-                                <h3 class="font-bold text-orange-800">Demandes de Statut Gérant</h3>
-                                <p class="text-sm text-orange-600">Ces utilisateurs souhaitent gérer un établissement.</p>
-                            </div>
-                            <span class="bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-md shadow-orange-100">3 Nouvelles</span>
+                <!-- VIEW: USERS -->
+                <div id="view-users" class="view-section">
+                    <div class="v-card overflow-hidden">
+                        <div class="v-card-header">
+                            <h5 class="font-bold text-slate-800">Gestion Utilisateurs</h5>
+                            <button class="bg-primary text-white px-4 py-1.5 rounded-md text-xs font-bold">+
+                                Ajouter</button>
                         </div>
                         <div class="overflow-x-auto">
-                            <table class="w-full">
-                                <thead class="bg-slate-50 text-slate-500 text-[11px] uppercase font-bold tracking-wider">
+                            <table class="w-full v-table text-left">
+                                <thead>
                                     <tr>
-                                        <th class="px-6 py-4 text-left">Candidat</th>
-                                        <th class="px-6 py-4 text-left">Hôtel / Entreprise</th>
-                                        <th class="px-6 py-4 text-left">Justificatif</th>
-                                        <th class="px-6 py-4 text-right">Décision</th>
+                                        <th>Utilisateur</th>
+                                        <th>Rôle actuel</th>
+                                        <th>Statut</th>
+                                        <th class="text-center">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-slate-100">
-                                    <tr class="hover:bg-slate-50">
-                                        <td class="px-6 py-4">
-                                            <div class="font-bold text-sm">Alice Bernard</div>
-                                            <div class="text-xs text-slate-500">alice@hotel-luxe.com</div>
+                                <tbody class="text-sm divide-y divide-slate-100">
+                                    @foreach ($allusers as $user )
+                                    <tr class="hover:bg-slate-50/50 transition-all">
+                                        <td class="px-8 py-4">
+                                            <div class="flex items-center gap-3">
+                                                <div
+                                                    class="w-9 h-9 rounded-full bg-indigo-50 text-primary flex items-center justify-center font-bold text-xs">
+                                                    JD</div>
+                                                <div>
+                                                    <p class="font-bold text-slate-700">{{ $user->name }}</p>
+                                                    <p class="text-[10px] text-slate-400 italic tracking-tight">
+                                                        {{$user->email}}/p>
+                                                </div>
+                                            </div>
                                         </td>
-                                        <td class="px-6 py-4 text-sm font-medium">Hôtel de la Plage</td>
-                                        <td class="px-6 py-4">
-                                            <button class="text-indigo-600 text-xs hover:underline flex items-center gap-1">
-                                                <i class="fas fa-file-pdf"></i> KBIS_Document.pdf
-                                            </button>
-                                        </td>
-                                        <td class="px-6 py-4 text-right space-x-2">
-                                            <button onclick="handleRequest('Alice', 'validée')" class="bg-green-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-green-700">Valider</button>
-                                            <button onclick="handleRequest('Alice', 'rejetée')" class="bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-slate-300">Rejeter</button>
+                                        <td class="px-8 py-4"><span
+                                                class="v-badge-pill v-badge-light-primary">{{ $user->role }}</span></td>
+                                        <td class="px-8 py-4"><span
+                                                class="v-badge-pill v-badge-light-success">Actif</span></td>
+                                        <td class="px-8 py-4 text-center">
+                                            <div class="flex justify-center gap-3 text-slate-300">
+                                                <button onclick="openModal('change-role', 'Jean Dupont')"
+                                                    class="hover:text-primary"><i
+                                                        class="fas fa-user-tag text-sm"></i></button>
+                                                <button onclick="openModal('ban', 'Jean Dupont')"
+                                                    class="hover:text-danger"><i
+                                                        class="fas fa-user-slash text-sm"></i></button>
+                                            </div>
                                         </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -384,62 +426,111 @@
                 </div>
 
             </div>
-        </main>
+        </div>
     </div>
 
-    <!-- Feedback Modal Mockup -->
-    <div id="feedback-toast" class="fixed bottom-8 right-8 bg-slate-900 text-white px-6 py-3 rounded-xl shadow-2xl transition-all transform translate-y-24 opacity-0 flex items-center gap-3 z-50">
-        <div class="w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></div>
-        <span id="toast-message" class="text-sm font-medium">Action effectuée avec succès.</span>
+    <!-- MODAL: CHANGE ROLE -->
+    <div id="modal-change-role" class="v-modal-overlay fixed inset-0 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-xl w-full max-w-sm shadow-2xl overflow-hidden transform scale-95 transition-all duration-200"
+            id="modal-role-content">
+            <div class="p-8">
+                <h3 class="text-xl font-bold text-slate-800 mb-2">Modifier le rôle</h3>
+                <p class="text-sm text-slate-400 mb-6">Changer le rôle de <span id="role-target-name"
+                        class="font-bold text-slate-700">Utilisateur</span></p>
+
+                <form action="#" method="POST">
+                    <div class="mb-6">
+                        <label
+                            class="text-[10px] uppercase font-bold text-slate-400 mb-2 block tracking-widest">Nouveau
+                            Rôle</label>
+                        <select name="role"
+                            class="w-full bg-slate-50 border border-slate-200 rounded-lg p-3 text-sm focus:ring-1 focus:ring-primary outline-none">
+                            <option value="client">Client</option>
+                            <option value="gerant">Gérant d'établissement</option>
+                            <option value="admin">Administrateur</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <button type="submit"
+                            class="w-full bg-primary text-white font-bold py-3 rounded-lg shadow-lg hover:shadow-indigo-200 transition-all">Sauvegarder</button>
+                        <button type="button" onclick="closeModal('change-role')"
+                            class="w-full text-slate-400 text-xs font-bold py-2 uppercase">Annuler</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: BAN -->
+    <div id="modal-ban" class="v-modal-overlay fixed inset-0 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-xl w-full max-w-sm shadow-2xl p-8 text-center scale-95 transition-all"
+            id="modal-ban-content">
+            <div
+                class="w-16 h-16 bg-rose-50 text-rose-500 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                <i class="fas fa-user-slash"></i></div>
+            <h3 class="text-xl font-bold text-slate-800 mb-2">Confirmer le bannissement ?</h3>
+            <p class="text-sm text-slate-400 mb-8">L'accès sera immédiatement révoqué.</p>
+            <div class="flex flex-col gap-2">
+                <button onclick="closeModal('ban')"
+                    class="w-full bg-danger text-white font-bold py-3 rounded-lg shadow-lg">Bannir</button>
+                <button onclick="closeModal('ban')"
+                    class="w-full text-slate-400 text-xs font-bold py-2 uppercase">Annuler</button>
+            </div>
+        </div>
     </div>
 
     <script>
         function showView(viewId) {
-            // Cache les sections
-            document.querySelectorAll('.view-section').forEach(section => {
-                section.classList.remove('active');
-            });
-            // Affiche la section cible
+            document.querySelectorAll('.view-section').forEach(view => view.classList.remove('active'));
             document.getElementById('view-' + viewId).classList.add('active');
 
-            // Mise à jour de la sidebar
-            document.querySelectorAll('.sidebar-link').forEach(link => {
-                link.classList.remove('active', 'bg-indigo-600', 'text-white', 'shadow-md');
-                link.classList.add('text-slate-500');
-            });
-            const activeLink = document.getElementById('nav-' + viewId);
-            activeLink.classList.add('active');
-            activeLink.classList.remove('text-slate-500');
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            const activeNav = document.getElementById('nav-' + viewId);
+            if (activeNav) activeNav.classList.add('active');
 
-            // Mise à jour du titre du header
             const titles = {
-                'dashboard': "Vue d'ensemble",
-                'users': "Gestion des Utilisateurs",
-                'roles': "Gestion des Rôles",
-                'moderation': "Modération & Demandes"
+                dashboard: "Dashboard",
+                approvals: "Approbations",
+                users: "Utilisateurs"
             };
-            document.getElementById('view-title').innerText = titles[viewId];
+            document.getElementById('breadcrumb-title').innerText = titles[viewId] || "Admin";
         }
 
-        function showToast(message) {
-            const toast = document.getElementById('feedback-toast');
-            document.getElementById('toast-message').innerText = message;
-            toast.classList.remove('translate-y-24', 'opacity-0');
-            
-            setTimeout(() => {
-                toast.classList.add('translate-y-24', 'opacity-0');
-            }, 3000);
+        function toggleTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                btn.classList.add('text-slate-400');
+            });
+            document.getElementById('btn-' + tabId).classList.add('active');
+            document.getElementById('btn-' + tabId).classList.remove('text-slate-400');
+
+            document.querySelectorAll('[id^="tab-"]').forEach(content => content.classList.add('hidden'));
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
         }
 
-        function confirmBan(userName) {
-            if (confirm(`Êtes-vous sûr de vouloir bannir ${userName} ? L'utilisateur ne pourra plus se connecter.`)) {
-                showToast(`${userName} a été banni du système.`);
+        function openModal(modalId, name = '') {
+            if (name && document.getElementById('role-target-name')) {
+                document.getElementById('role-target-name').innerText = name;
             }
+            const overlay = document.getElementById('modal-' + modalId);
+            const content = overlay.querySelector('.scale-95');
+
+            overlay.classList.remove('hidden');
+            overlay.classList.add('flex');
+            setTimeout(() => content.classList.replace('scale-95', 'scale-100'), 10);
         }
 
-        function handleRequest(userName, action) {
-            showToast(`La demande de ${userName} a été ${action}.`);
+        function closeModal(modalId) {
+            const overlay = document.getElementById('modal-' + modalId);
+            const content = overlay.querySelector('.scale-100');
+
+            content.classList.replace('scale-100', 'scale-95');
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+                overlay.classList.remove('flex');
+            }, 200);
         }
     </script>
 </body>
+
 </html>
