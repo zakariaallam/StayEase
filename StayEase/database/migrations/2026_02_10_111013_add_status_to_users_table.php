@@ -12,20 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->unsignedBigInteger('role_id')->after('email')->nullable();
-            $table->foreign('role_id')
-                ->references('id') 
-                ->on('roles')
-                ->cascadeOnUpdate()
-                ->nullOnDelete();
+            $table->enum('status', ['actif', 'banni'])->default('actif');
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign(['role_id']);
-            $table->dropColumn('role_id');
+            $table->dropColumn('status');
         });
     }
 };
