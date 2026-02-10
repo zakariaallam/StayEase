@@ -43,7 +43,6 @@
     </style>
 </head>
 <body class="bg-white dark:bg-[#0a0a0a] text-slate-900 dark:text-slate-100 antialiased font-sans hero-gradient">
-@dd(Auth::user())
     <!-- Navigation -->
     <header class="fixed top-0 left-0 right-0 z-50 glass-effect border-b border-slate-200/60 dark:border-white/10">
         <nav class="max-w-7xl mx-auto px-8 h-20 flex items-center justify-between">
