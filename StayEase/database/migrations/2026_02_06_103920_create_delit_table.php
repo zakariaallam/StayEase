@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::dropIfExists('tags');
-        Schema::dropIfExists('categories');
-        Schema::dropIfExists('proprietes');
+        // Schema::dropIfExists('tags');
+        // Schema::dropIfExists('categories');
+        // Schema::dropIfExists('proprietes');
         Schema::dropIfExists('chambres');
 
         Schema::enableForeignKeyConstraints();

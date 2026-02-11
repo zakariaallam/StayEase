@@ -23,8 +23,8 @@ class RoomController extends Controller
      */
     public function index(Request $request)
     {
-
         $query = Room::with('tags', 'properties');
+        dd($request);
         if ($tagId = $request->get('tag')) {
             $query->whereHas('tags', fn($q) => $q->where('id', $tagId));
         }
@@ -91,6 +91,7 @@ class RoomController extends Controller
             $path = $file->storeAs('rooms', $name, 'public');
             $validated['image'] = $path;
         }
+        // dd($request->Propriete);
         $room = Room::create($validated);
         $room->tags()->sync($request->get('tags', [$request->tag_id]));
         $room->properties()->sync($request->get('properties', [$request->Propriete]));
@@ -145,8 +146,8 @@ class RoomController extends Controller
             $name = time() . '_' . $file->getClientOriginalName();
             $path = $file->storeAs('rooms', $name, 'public');
             $validated['image'] = $path;
-            // dd($path);
         }
+        // dd($request);
         $room->update($validated);
         $room->tags()->sync($request->get('tags', [$request->tag_id]));
         $room->properties()->sync($request->get('properties', [$request->Propriete]));
