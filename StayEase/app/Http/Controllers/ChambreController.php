@@ -84,7 +84,7 @@ class ChambreController extends Controller
             'Categorie' => Categorie::all(),
             'Tag' => Tag::all(),
             'Propriete' => Propriete::all(),
-            'Chambre'=>$Chambre
+            'Chambre' => $Chambre
         ]);
     }
 
@@ -105,7 +105,7 @@ class ChambreController extends Controller
             'tag_id' => $request->tag_id,
             'propriete_id' => $request->propriete_id
         ]);
-        return  redirect('/Chambre');
+        return redirect('/Chambre');
     }
 
     /**
@@ -114,6 +114,22 @@ class ChambreController extends Controller
     public function destroy(Chambre $Chambre)
     {
         $Chambre->delete();
-        return  redirect('/Chambre');
+        return redirect('/Chambre');
+    }
+
+    public function filterDesponible(Request $request)
+    {
+        $validate = $request->validate([
+            "debu" => "required|date",
+            "fin" => "required|date|after:debu"
+        ]);
+
+        $chambres = Chambre::with('hotel.user.reservation')
+            ->whereHas('hotel.user.reservation', function ($q) use ($request) {
+                $q->where('dateDebut', '<', $request->fin)
+                    ->where('dateFin', '>', $request->debu);
+            })->get();
+        dd($chambres);
+        return view('/', compact('chambres'));
     }
 }

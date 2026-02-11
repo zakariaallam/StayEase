@@ -20,11 +20,11 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        
+
         $this->call([PropertySeeder::class]);
         $this->call([hotelsSeeder::class]);
         $this->call([TagSeeder::class]);
         $this->call([RoomSeeder::class]);
-        $this->call([SeedersUserSeeder]); 
-    }   
+        $this->call([UserSeeder::class]);
+    }
 }

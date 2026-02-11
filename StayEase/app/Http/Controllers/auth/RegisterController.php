@@ -18,6 +18,7 @@ class RegisterController extends Controller
         $role_id = Role::where('role','client')->first()->id;
         $userData['role_id'] = $role_id;
         $userData['password'] = bcrypt($userData['password']);
+        // dd($userData);
         User::create($userData);
         return redirect()->route('login');
     }

@@ -20,10 +20,10 @@ use App\Http\Controllers\HomeController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::post('/', function () {
-    return view('welcome');
-})->name('client.home');
-
+// Route::post('/', function () {
+//     return view('welcome');
+// })->name('client.home');
+Route::view('home','welcome')->name('home');
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/hotel/{hotel}/detail', [HomeController::class, 'show'])->name('hotels.detail');

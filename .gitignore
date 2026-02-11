@@ -3,3 +3,4 @@
 dockerfile
 docker-compose.yml
 nginx.conf
+StayEase/storage/logs/laravel.log
