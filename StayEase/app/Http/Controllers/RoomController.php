@@ -4,22 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Models\Tag;
 use App\Models\Room;
-use App\Models\hotel;
+use App\Models\Hotel;
 use App\Models\Property;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Redirect;
+
+
+
+
+
 
 class RoomController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(request $request)
+    public function index(Request $request)
     {
-
         $query = Room::with('tags', 'properties');
+        dd($request);
         if ($tagId = $request->get('tag')) {
             $query->whereHas('tags', fn($q) => $q->where('id', $tagId));
         }
@@ -53,11 +58,22 @@ class RoomController extends Controller
             'Tag' => $Tag
         ]);
     }
+    public function createAndHotel(hotel $hotel)
+    {
+        // dd($hotel);
+        $Property = Property::all();
+        $Tag = Tag::all();
+        return view('rooms.add_ID_hotel', [
+            'hotel' => $hotel,
+            'Property' => $Property,
+            'Tag' => $Tag
+        ]);
+    }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(request $request)
     {
         // dd($request);
         $validated = $request->validate([
@@ -68,15 +84,17 @@ class RoomController extends Controller
             'description' => 'nullable|string',
             'image' => 'required|max:2048',
         ]);
+
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $name = time() . '_' . $file->getClientOriginalName();
             $path = $file->storeAs('rooms', $name, 'public');
             $validated['image'] = $path;
         }
+        // dd($request->Propriete);
         $room = Room::create($validated);
-        $room->tags()->sync($request->get('tags', []));
-        $room->properties()->sync($request->get('properties', []));
+        $room->tags()->sync($request->get('tags', [$request->tag_id]));
+        $room->properties()->sync($request->get('properties', [$request->Propriete]));
         return redirect()->route('rooms.show', $room);
     }
 
@@ -117,7 +135,7 @@ class RoomController extends Controller
             'price_per_night' => 'required|numeric|min:0',
             'capacity' => 'required|integer|min:1',
             'description' => 'nullable|string',
-            'image' => 'required|max:2048',
+            'image' => '',
         ]);
         // dd($request);
         if ($request->hasFile('image')) {
@@ -128,9 +146,11 @@ class RoomController extends Controller
             $name = time() . '_' . $file->getClientOriginalName();
             $path = $file->storeAs('rooms', $name, 'public');
             $validated['image'] = $path;
-            // dd($path);
         }
+        // dd($request);
         $room->update($validated);
+        $room->tags()->sync($request->get('tags', [$request->tag_id]));
+        $room->properties()->sync($request->get('properties', [$request->Propriete]));
         return Redirect('/rooms');
     }
 
@@ -142,5 +162,4 @@ class RoomController extends Controller
         $room->delete();
         return redirect()->route('rooms.index');
     }
-           
 }

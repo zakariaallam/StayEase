@@ -11,92 +11,101 @@
 </head>
 
 <body>
-    {{-- ------------------------------------------------------ --}}
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{{ route('rooms.index') }}">rooms</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
-                aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarScroll">
-                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-                    <a type="button" href="{{ route('rooms.create') }}" class="btn btn-success">add</a>
-                    <li class="nav-item">
-                        
-                    </li>
-                    <li class="nav-item">
-                    </li>
-                </ul>
-
-            </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm mb-4">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="{{ route('rooms.index') }}">🏨 Rooms Manager</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarScroll">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a href="{{ route('rooms.create') }}" class="btn btn-success btn-sm">
+                        <i class="bi bi-plus-lg"></i> Add New Room
+                    </a>
+                    {{-- ---------------------------------------------------- --}}
+                    <a href="{{ route('createAndHotel',[1]) }}" class="btn btn-success btn-sm">
+                        <i class="bi bi-plus-lg"></i> test
+                    </a>
+                </li>
+            </ul>
         </div>
-    </nav>
-    {{-- ------------------------------------------------------ --}}
-    <div class="card-group">
-        <div class="card">
+    </div>
+</nav>
 
+<div class="container">
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body bg-light">
             <form method='GET' action='{{ route('rooms.index') }}'>
-
-                <div class="row">
-                    <div class="col">
-                        <select name='tag' class="form-control">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <select name='tag' class="form-select">
                             <option value=''>Tous les tags</option>
                             @foreach ($allTags as $tag)
-                                <option value='{{ $tag->id }}'>{{ $tag->name }}</option>
+                                <option value='{{ $tag->id }}'>{{ $tag->nom }}</option>
                             @endforeach
                         </select>
                     </div>
-                    <div class="col">
-                        <select name='property' class="form-control">
+                    <div class="col-md-4">
+                        <select name='property' class="form-select">
                             <option value=''>Toutes les propriétés</option>
                             @foreach ($allProperties as $prop)
                                 <option value='{{ $prop->id }}'>{{ $prop->name }}</option>
                             @endforeach
                         </select>
                     </div>
-                    <div class="col">
-                        <button type='submit' class="btn btn-info form-control">Filtrer</button>
+                    <div class="col-md-4">
+                        <button type='submit' class="btn btn-info w-100 text-white">Filtrer</button>
                     </div>
                 </div>
             </form>
-            <div class="mb-3"></div>
-
-            {{-- lllllllllllllllllllllllllllllllllllllllllllllllllllll --}}
-            <div class="row row-cols-1 row-cols-md-2 g-4">
-
-                @forelse ($rooms as $dat)
-                    <div class="card" style="width: 20rem;">
-                        <div class="card-body">
-                            
-                            <img src="{{ asset('storage/'.$dat->image)  }}" class="card-img-top"
-                                alt="https://picsum.photos/400/300">
-                            <h5 class="card-title">{{ $dat->number }}</h5>
-                            <p class="card-text">price_per_night: {{ $dat->price_per_night }}€/nuit</p>
-                            <p class="card-text">capacity: {{ $dat->capacity }}</p>
-                            <p class="card-text">description: {{ $dat->description }}</p>
-                            {{-- delete --}}
-                            <form action="{{ route('rooms.destroy', [$dat->id]) }}" method="POST">
-                                @csrf
-                                @method('delete')
-                                <button type="submit" class="btn btn-danger">delete</button>
-                            </form>
-                            {{-- edit --}}
-                            <a href="{{ route('rooms.edit', [$dat->id]) }}" class="btn btn-success">edit</a>
-                            {{-- show --}}
-                            <a href="{{ route('rooms.show', [$dat->id]) }}" class="btn btn-primary">show</a>
-                        </div>
-                    </div>
-                @empty
-                    <div class="col-12 text-center mt-5">
-                        <div class="alert alert-info">
-                            <p class="mb-0">Aucune chambre n'est disponible pour le moment.</p>
-                        </div>
-                    </div>
-                @endforelse
-            </div>
         </div>
     </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @forelse ($rooms as $dat)
+            <div class="col">
+                <div class="card h-100 border-0 shadow-sm transition-hover">
+                    <img src="{{ asset('storage/'.$dat->image) }}" class="card-img-top" alt="Room Image" style="height: 200px; object-fit: cover;">
+                    
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h5 class="card-title mb-0 text-primary">Chambre {{ $dat->number }}</h5>
+                            <span class="badge bg-light text-dark border">{{ $dat->price_per_night }} €/nuit</span>
+                        </div>
+                        
+                        <p class="card-text text-muted small mb-2">
+                            <strong>Capacité:</strong> {{ $dat->capacity }} personnes
+                        </p>
+                        <p class="card-text text-truncate" style="max-height: 50px;">
+                            {{ $dat->description }}
+                        </p>
+                    </div>
+
+                    <div class="card-footer bg-white border-top-0 pb-3">
+                        <div class="d-flex gap-2 justify-content-center">
+                            <a href="{{ route('rooms.show', [$dat->id]) }}" class="btn btn-outline-primary btn-sm px-3">View</a>
+                            
+                            <a href="{{ route('rooms.edit', [$dat->id]) }}" class="btn btn-outline-success btn-sm px-3">Edit</a>
+                            
+                            <form action="{{ route('rooms.destroy', [$dat->id]) }}" method="POST" >
+                                @csrf
+                                @method('delete')
+                                <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @empty
+            <div class="col-12 text-center py-5">
+                <div class="alert alert-info">
+                    <p class="mb-0 fs-5">Aucune chambre n'est disponible pour le moment.</p>
+                </div>
+            </div>
+        @endforelse
+    </div>
+</div>
     {{-- finlllllllllllllllllllllllllllllllllllllllllllllllll --}}
 
 

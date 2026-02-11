@@ -63,6 +63,8 @@ Route::view('register', 'auth.register');
 Route::post('register', RegisterController::class)->name('register.user');
 Route::post('register', RegisterController::class)->name('register.user');
 
+Route::resource('rooms',RoomController::class);
+Route::get('rooms/createAndHotel/{hotel}',[RoomController::class,'createAndHotel'])->name('createAndHotel');
 Route::resource('rooms', RoomController::class);
 
 Route::view('admin', 'admin.dashboard')->name('admin')->middleware('Role');
