@@ -73,7 +73,7 @@
 
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-bold">Propriété (Catégorie)</label>
-                                <select class="form-select" name="categorie_id">
+                                <select class="form-select" name="Propriete">
                                     @foreach ($Property as $item)
                                         <option value="{{ $item->id }}" {{ $room->categorie_id == $item->id ? 'selected' : '' }}>
                                             {{ $item->name }}
