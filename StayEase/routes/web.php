@@ -13,6 +13,9 @@ use App\Http\Controllers\PaiementController;
 use App\Http\Controllers\auth\LoginController;
 use App\Http\Controllers\auth\LogoutController;
 use App\Http\Controllers\auth\RegisterController;
+use App\Http\Controllers\HomeController;
+
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,9 +23,10 @@ Route::get('/', function () {
 Route::post('/', function () {
     return view('welcome');
 })->name('client.home');
-Route::get('/', [HotelController::class, 'welcome'])->name('client.home');
 
-Route::get('/hotel/{hotel}/detail', [HotelController::class, 'showDetail'])->name('hotels.detail');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::get('/hotel/{hotel}/detail', [HomeController::class, 'show'])->name('hotels.detail');
 
 // Route::get('/Chambre',[ChambreController::class,'index'])->name("Chambre.index");
 // Route::get('/Chambre/add',[ChambreController::class,'create'])->name("Chambre.create");
@@ -61,31 +65,31 @@ Route::post('register', RegisterController::class)->name('register.user');
 
 Route::resource('rooms', RoomController::class);
 
-Route::view('admin','admin.dashboard')->name('admin')->middleware('Role');
+Route::view('admin', 'admin.dashboard')->name('admin')->middleware('Role');
 Route::post('roleSave', [RoleController::class, 'store'])->name('role.save');
-Route::post('logout',[LogoutController::class,'logout'])->name('logout');
+Route::post('logout', [LogoutController::class, 'logout'])->name('logout');
 
 Route::view('admin', 'admin.dashboard')->name('admin')->middleware('Role');
 Route::post('roleSave', [RoleController::class, 'store'])->name('role.save');
 Route::post('logout', [LogoutController::class, 'logout'])->name('logout');
 
-Route::post('validate',[RoleController::class,'validate'])->name('manager.validate');
+Route::post('validate', [RoleController::class, 'validate'])->name('manager.validate');
 Route::get('/admin', function () {
     $pendingHotels = Hotel::where('is_validate', false)->get();
     $totalUsers = User::count();
     $pendingApprovals = $pendingHotels->count();
     $allusers = User::all();
-    return view('admin.dashboard', compact('pendingHotels', 'totalUsers', 'pendingApprovals','allusers'));
+    return view('admin.dashboard', compact('pendingHotels', 'totalUsers', 'pendingApprovals', 'allusers'));
 })->middleware('Role');
 Route::patch('/admin/hotels/{hotel}/approve', [AdminController::class, 'approveHotel'])
     ->name('admin.hotels.approve');
 
 //Stripe
-Route::get("/Paiement/{id}",[PaiementController::class,"index"])->name('reserv.index');
-Route::post("/Paiement",[PaiementController::class,"store"])->name('stripe.post');
-Route::get("/success",[PaiementController::class,"success"])->name('success');
-Route::get("/cancel",[PaiementController::class,"cancel"])->name('cancel');
+Route::get("/Paiement/{id}", [PaiementController::class, "index"])->name('reserv.index');
+Route::post("/Paiement", [PaiementController::class, "store"])->name('stripe.post');
+Route::get("/success", [PaiementController::class, "success"])->name('success');
+Route::get("/cancel", [PaiementController::class, "cancel"])->name('cancel');
 
 // Filtter
 
-Route::post("/",[ChambreController::class,"filterDesponible"])->name('filte.date');
+Route::post("/", [ChambreController::class, "filterDesponible"])->name('filte.date');
