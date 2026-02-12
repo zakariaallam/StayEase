@@ -18,8 +18,10 @@ Handle an authentication attempt.*/
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
+            dd(Auth::user());
 
             $role = Role::where('id',$user->role_id)->first();
+
             $request->session()->regenerate();
             if ($role->role == "admin") {
                 return redirect()->intended(route('admin'));

@@ -194,7 +194,7 @@
                 </div>
 
                 <div class="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-sm text-center">
-                    <a href="{{ route('rooms.create') }}"
+                    <a href="{{ route('createAndHotel',[$hotel->id]) }}"
                         class="block w-full py-4 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-2xl transition-all">
                         Ajouter une Chambre
                     </a>

@@ -24,7 +24,7 @@ class RoomController extends Controller
     public function index(Request $request)
     {
         $query = Room::with('tags', 'properties');
-        dd($request);
+        // dd($request);
         if ($tagId = $request->get('tag')) {
             $query->whereHas('tags', fn($q) => $q->where('id', $tagId));
         }
