@@ -38,7 +38,7 @@ class PaiementController extends Controller
 
     public function store(Request $request)
     {
-        \Stripe\Stripe::setApiKey(apiKey: env('STRIPE_SECRET'));
+        // \Stripe\Stripe::setApiKey(apiKey: env('STRIPE_SECRET'));
         $session = \Stripe\Checkout\Session::create([
             'line_items' => [
                 [
